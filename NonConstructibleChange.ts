@@ -2,15 +2,12 @@
 export function nonConstructibleChange(coins: number[]) {
   const sortedCoins = [...coins].sort((a, b) => a - b)
 
-  let change = 0
-  let i = 0
+  let minChange = 0
 
   for (const coin of sortedCoins) {
-    if (coin > change + 1) return change + 1
-
-    change += coin
-    i++
+    if (coin > minChange + 1) break
+    minChange += coin
   }
 
-  return change + 1
+  return minChange + 1
 }
