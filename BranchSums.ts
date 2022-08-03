@@ -12,7 +12,7 @@ class BinaryTree {
   }
 }
 
-// O(n) time complexity, O(n) space complexity
+// Solution 1, O(n) time complexity, O(n) space complexity
 function generateBranchSums(
   tree: BinaryTree,
   branchSumsArr: number[],
