@@ -29,3 +29,21 @@ export function findClosestValueInBst(tree: BST, target: number) {
 
   return closestValue
 }
+
+// Solution 2, Avg: O(log(n)) time complexity, O(log(n)) space complexity || Worst: O(n) time complexity, O(n) space complexity
+export function findClosestValueInBst2(tree: BST, target: number): number {
+  if (!tree.value) return Infinity
+  if (tree.value === target) return tree.value
+  const nextNode = tree.value > target ? tree.left : tree.right
+
+  const currentClosestValue = findClosestValueInBst(
+    nextNode || new BST(0),
+    target
+  )
+
+  if (Math.abs(tree.value - target) < Math.abs(currentClosestValue - target)) {
+    return tree.value
+  }
+
+  return currentClosestValue
+}
