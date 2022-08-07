@@ -12,3 +12,29 @@ export const getNthFib2 = (n: number) => {
 
   return fibNums[n - 1]
 }
+
+// Solution 3, O(n) time complexity, O(1) space complexity
+const cacheLastFibNum = () => {
+  let previousLastNum = 0
+
+  return (lastNum: number) => {
+    const currentLastNum = previousLastNum + lastNum
+    previousLastNum = lastNum
+
+    return currentLastNum
+  }
+}
+
+export const getNthFib3 = (n: number) => {
+  let nthFibonacci = n === 1 ? 0 : 1
+  let i = 2
+
+  const getLastFibNum = cacheLastFibNum()
+
+  while (i < n) {
+    nthFibonacci = getLastFibNum(nthFibonacci)
+    i++
+  }
+
+  return nthFibonacci
+}
