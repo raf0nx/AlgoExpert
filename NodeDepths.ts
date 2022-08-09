@@ -28,3 +28,21 @@ class BinaryTree {
     this.right = null
   }
 }
+
+// Solution 2, O(n) time complexity, O(h) space complexity where n is the number of nodes in the tree and h is the height of the tree
+export function nodeDepths2(root: BinaryTree) {
+  const nodeStack = [
+    { value: root.value, left: root.left, right: root.right, depth: 0 },
+  ]
+  let depthSum = 0
+
+  while (!!nodeStack.length) {
+    const { left, right, depth } = nodeStack.pop()!
+    depthSum += depth
+
+    if (right) nodeStack.push({ ...right, depth: depth + 1 })
+    if (left) nodeStack.push({ ...left, depth: depth + 1 })
+  }
+
+  return depthSum
+}
