@@ -12,3 +12,18 @@ export function minimumWaitingTime(queries: number[]) {
 
   return allQueriesWaitingTime.reduce((a, b) => a + b)
 }
+
+// Solution 2, O(n * log(n)) time complexity, O(1) space complexity
+export function minimumWaitingTime2(queries: number[]) {
+  queries.sort((a, b) => a - b)
+
+  let totalMinWaitTime = 0
+  let queriesLeft: number
+
+  for (let i = 0; i < queries.length; i++) {
+    queriesLeft = queries.length - 1 - i
+    totalMinWaitTime += queries[i] * queriesLeft
+  }
+
+  return totalMinWaitTime
+}
