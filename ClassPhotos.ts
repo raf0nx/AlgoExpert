@@ -9,15 +9,8 @@ export function classPhotos(
   const areRedsTaller = redShirtHeights[0] > blueShirtHeights[0]
 
   for (let i = 0; i < redShirtHeights.length; i++) {
-    const firstRowHeight = areRedsTaller
-      ? redShirtHeights[i]
-      : blueShirtHeights[i]
-    const secondRowHeight = areRedsTaller
-      ? blueShirtHeights[i]
-      : redShirtHeights[i]
-
-    if (firstRowHeight > secondRowHeight) continue
-    else return false
+    if (redShirtHeights[i] >= blueShirtHeights[i] !== areRedsTaller)
+      return false
   }
 
   return true
