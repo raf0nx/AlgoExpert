@@ -16,7 +16,7 @@ export function binarySearch(array: number[], target: number): number {
   return -1
 }
 
-// Solution 2, O(log(n)) time complexity, O(n) space complexity
+// Solution 2, O(log(n)) time complexity, O(log(n)) space complexity
 function binarySearchHelper(
   array: number[],
   target: number,
