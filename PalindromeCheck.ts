@@ -6,3 +6,18 @@ export function isPalindrome(string: string) {
     [...string.slice(midIdx + (string.length % 2))].reverse().join('')
   )
 }
+
+// Solution 2, O(n) time complexity, O(1) space complexity
+export function isPalindrome2(string: string) {
+  let i = 0
+
+  while (i <= Math.floor(string.length / 2) - 1) {
+    if (string[i] !== string[string.length - i - 1]) {
+      return false
+    }
+
+    i++
+  }
+
+  return true
+}
