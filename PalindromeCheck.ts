@@ -21,3 +21,9 @@ export function isPalindrome2(string: string) {
 
   return true
 }
+
+// Solution 3, O(n) time complexity, O(n) space complexity
+export function isPalindrome3(string: string, i = 0): boolean {
+  const j = string.length - i - 1
+  return i >= j ? true : string[i] === string[j] && isPalindrome3(string, i + 1)
+}
