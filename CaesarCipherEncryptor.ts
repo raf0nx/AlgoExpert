@@ -7,7 +7,7 @@ export function caesarCipherEncryptor(string: string, key: number) {
     .join('')
 }
 
-// Solution 2
+// Solution 2, O(n) time complexity, O(n) space complexity
 export function caesarCipherEncryptor2(string: string, key: number) {
   const alphabet = 'abcdefghijklmnopqrstuvwxyz'
   return [...string]
