@@ -6,3 +6,11 @@ export function caesarCipherEncryptor(string: string, key: number) {
     )
     .join('')
 }
+
+// Solution 2
+export function caesarCipherEncryptor2(string: string, key: number) {
+  const alphabet = 'abcdefghijklmnopqrstuvwxyz'
+  return [...string]
+    .map(letter => alphabet.charAt((alphabet.indexOf(letter) + key) % 26))
+    .join('')
+}
