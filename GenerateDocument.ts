@@ -7,12 +7,7 @@ export function generateDocument(characters: string, document: string) {
   const charactersFrequencyMap = createCharsFrequencyMap(characters)
 
   for (const char of document) {
-    if (
-      !charactersFrequencyMap.hasOwnProperty(char) ||
-      charactersFrequencyMap[char] === 0
-    )
-      return false
-
+    if (!charactersFrequencyMap[char]) return false
     charactersFrequencyMap[char]--
   }
 
