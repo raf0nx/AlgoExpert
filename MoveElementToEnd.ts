@@ -4,12 +4,11 @@ export function moveElementToEnd(array: number[], toMove: number) {
     right = array.length - 1
 
   while (left < right) {
-    if (array[left] === toMove && array[right] !== toMove) {
-      ;[array[left], array[right]] = [array[right], array[left]]
+    if (array[right] !== toMove) {
+      if (array[left] === toMove)
+        [array[left], array[right]] = [array[right], array[left]]
       left++
-      right--
-    } else if (array[right] === toMove) right--
-    else left++
+    } else right--
   }
 
   return array
