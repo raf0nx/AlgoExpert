@@ -9,9 +9,9 @@ export function spiralTraverse(array: number[][]) {
 
   let direction: 'up' | 'down' | 'right' | 'left' = 'right'
 
-  while (startRow <= endRow || startCol <= endCol) {
+  while (startRow <= endRow && startCol <= endCol) {
     switch (direction) {
-      case 'right': {
+      case 'right':
         for (let i = startCol; i <= endCol; i++) {
           visitedNums.push(array[startRow][i])
         }
@@ -20,8 +20,7 @@ export function spiralTraverse(array: number[][]) {
         direction = 'down'
 
         break
-      }
-      case 'down': {
+      case 'down':
         for (let i = startRow; i <= endRow; i++) {
           visitedNums.push(array[i][endCol])
         }
@@ -30,8 +29,7 @@ export function spiralTraverse(array: number[][]) {
         direction = 'left'
 
         break
-      }
-      case 'left': {
+      case 'left':
         for (let i = endCol; i >= startCol; i--) {
           visitedNums.push(array[endRow][i])
         }
@@ -40,8 +38,7 @@ export function spiralTraverse(array: number[][]) {
         direction = 'up'
 
         break
-      }
-      case 'up': {
+      case 'up':
         for (let i = endRow; i >= startRow; i--) {
           visitedNums.push(array[i][startCol])
         }
@@ -50,7 +47,6 @@ export function spiralTraverse(array: number[][]) {
         direction = 'right'
 
         break
-      }
     }
   }
 
