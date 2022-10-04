@@ -49,7 +49,7 @@ export function longestPeak2(array: number[]) {
 
       if (currPeak > currLongestPeak) currLongestPeak = currPeak
 
-      idx = rightPeakBound - 1
+      idx = rightPeakBound
     }
 
     idx++
