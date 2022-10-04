@@ -25,7 +25,7 @@ function getPeakItemsCount(
 
   for (
     let i = idx;
-    direction ? i < array.length : i >= 0;
+    direction ? i < array.length - 1 : i >= 1;
     direction ? i++ : i--
   ) {
     if (array[i] > array[i - (direction ? -1 : 1)]) count += 1
