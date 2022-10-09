@@ -1,4 +1,4 @@
-// Solution 1, O(n) time complexity, O(1) space complexity
+// Solution 1, O(n) time complexity, O(n) space complexity
 export function firstDuplicateValue(array: number[]) {
   const traversedNums = new Set() // Or use a Hash Map here
 
