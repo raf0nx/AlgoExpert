@@ -1,4 +1,4 @@
-// Solution 1, O(n) time complexity, O(n) space complexity
+// Solution 1, O(n * log(n)) time complexity, O(n) space complexity
 export function mergeOverlappingIntervals(array: number[][]) {
   const sortedIntervals = array.sort(([a], [b]) => a - b)
 
