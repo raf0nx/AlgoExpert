@@ -5,23 +5,18 @@ export function mergeOverlappingIntervals(array: number[][]) {
   const mergedIntervals: number[][] = [array[0]]
 
   for (const interval of sortedIntervals) {
-    const currIntervalStart = interval[0]
-    const currIntervalEnd = interval[1]
-    const prevIntervalStart = mergedIntervals[mergedIntervals.length - 1][0]
+    const [currIntervalStart, currIntervalEnd] = interval
     const prevIntervalEnd = mergedIntervals[mergedIntervals.length - 1][1]
 
-    if (
-      currIntervalStart >= prevIntervalStart &&
-      currIntervalStart <= prevIntervalEnd
-    ) {
-      mergedIntervals.pop()
-      mergedIntervals.push([
-        prevIntervalStart,
-        Math.max(prevIntervalEnd, currIntervalEnd),
-      ])
-    } else {
-      mergedIntervals.push(interval)
+    if (currIntervalStart <= prevIntervalEnd) {
+      mergedIntervals[mergedIntervals.length - 1][1] = Math.max(
+        prevIntervalEnd,
+        currIntervalEnd
+      )
+      continue
     }
+
+    mergedIntervals.push(interval)
   }
 
   return mergedIntervals
