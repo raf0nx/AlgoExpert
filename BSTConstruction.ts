@@ -78,3 +78,100 @@ export class BST {
     return this
   }
 }
+
+// Solution 2 (complexities inside class)
+export class BSTv2 {
+  value: number
+  left: BSTv2 | null
+  right: BSTv2 | null
+
+  constructor(value: number) {
+    this.value = value
+    this.left = null
+    this.right = null
+  }
+
+  getDirection(value: number): 'left' | 'right' {
+    return value < this.value ? 'left' : 'right'
+  }
+
+  // Avg: O(log(n)) time complexity, O(1) space complexity
+  // Worst: O(n) time complexity, O(1) space complexity
+  insert(value: number): BSTv2 {
+    let currentNode: BSTv2 | null = this
+
+    while (currentNode) {
+      const direction = currentNode.getDirection(value)
+
+      if (!currentNode[direction]) {
+        currentNode[direction] = new BSTv2(value)
+        break
+      }
+
+      currentNode = currentNode[direction]
+    }
+
+    return this
+  }
+
+  // Avg: O(log(n)) time complexity, O(1) space complexity
+  // Worst: O(n) time complexity, O(1) space complexity
+  contains(value: number) {
+    let currentNode: BSTv2 | null = this
+
+    while (currentNode) {
+      if (currentNode.value === value) return true
+      currentNode = currentNode[currentNode.getDirection(value)]
+    }
+
+    return false
+  }
+
+  // Avg: O(log(n)) time complexity, O(1) space complexity
+  // Worst: O(n) time complexity, O(1) space complexity
+  remove(value: number, parentNode: BSTv2 | null = null): BSTv2 {
+    let currentNode: BSTv2 | null = this
+
+    while (currentNode) {
+      const direction = currentNode.getDirection(value)
+
+      if (currentNode.value === value) {
+        if (currentNode.left && currentNode.right) {
+          currentNode.value = currentNode.right.findSmallestNum()
+          currentNode.right.remove(currentNode.value, currentNode)
+        } else if (!parentNode) {
+          if (currentNode.left) {
+            currentNode.value = currentNode.left.value
+            currentNode.right = currentNode.left.right
+            currentNode.left = currentNode.left.left
+          } else if (currentNode.right) {
+            currentNode.value = currentNode.right.value
+            currentNode.left = currentNode.right.left
+            currentNode.right = currentNode.right.right
+          }
+        } else if (currentNode === parentNode.left) {
+          parentNode.left = currentNode.left || currentNode.right
+        } else if (currentNode === parentNode.right) {
+          parentNode.right = currentNode.left || currentNode.right
+        }
+
+        break
+      } else {
+        parentNode = currentNode
+        currentNode = currentNode[direction]
+      }
+    }
+
+    return this
+  }
+
+  findSmallestNum(): number {
+    let currentNode: BSTv2 = this
+
+    while (currentNode.left) {
+      currentNode = currentNode.left
+    }
+
+    return currentNode.value
+  }
+}
