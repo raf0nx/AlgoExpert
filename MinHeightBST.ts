@@ -54,3 +54,20 @@ function minHeightBstHelper(array: number[], midIdx: number, root: BST) {
     minHeightBstHelper(rightArr, nextRightNodeIdx, root)
   }
 }
+
+// Solution 2, O(n) time complexity, O(n) space complexity
+export function minHeightBst2(
+  array: number[],
+  startIndex = 0,
+  endIndex = array.length - 1
+) {
+  if (startIndex > endIndex) return null
+
+  const midIdx = Math.floor((startIndex + endIndex) / 2)
+  const currentNode = new BST(array[midIdx])
+
+  currentNode.left = minHeightBst2(array, startIndex, midIdx - 1)
+  currentNode.right = minHeightBst2(array, midIdx + 1, endIndex)
+
+  return currentNode
+}
