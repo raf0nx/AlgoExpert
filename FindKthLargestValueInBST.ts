@@ -17,7 +17,7 @@ export function findKthLargestValueInBst(
   k: number,
   traversed: number[] = []
 ) {
-  if (!tree) return
+  if (!tree || traversed.length >= k) return
 
   findKthLargestValueInBst(tree.right, k, traversed)
   traversed.push(tree.value)
