@@ -11,7 +11,7 @@ export class BST {
   }
 }
 
-// Solution 1, O(n) time complexity, O(n) space complexity
+// Solution 1, O(h + k) time complexity, O(n) space complexity where h is the height of the tree and k is the function parameter
 export function findKthLargestValueInBst(
   tree: BST | null,
   k: number,
@@ -20,9 +20,11 @@ export function findKthLargestValueInBst(
   if (!tree || traversed.length >= k) return
 
   findKthLargestValueInBst(tree.right, k, traversed)
-  traversed.push(tree.value)
 
-  findKthLargestValueInBst(tree.left, k, traversed)
+  if (traversed.length < k) {
+    traversed.push(tree.value)
+    findKthLargestValueInBst(tree.left, k, traversed)
+  }
 
   return traversed[k - 1]
 }
