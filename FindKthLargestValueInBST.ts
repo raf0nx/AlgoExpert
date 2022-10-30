@@ -61,3 +61,23 @@ function findKthLargestValueInBst2Helper(
 
   return nodesInfo.lastVisitedNodeValue
 }
+
+// Solution 3, O(h + k) time complexity, O(h) space complexity where h is the height of the tree and k is the function parameter
+export function findKthLargestValueInBst3(tree: BST, k: number) {
+  const stack: BST[] = []
+  let current: BST | null = tree
+
+  while (true) {
+    while (current) {
+      stack.push(current)
+      current = current.right
+    }
+
+    const node = stack.pop()!
+
+    k -= 1
+    if (!k) return node.value
+
+    current = node.left
+  }
+}
