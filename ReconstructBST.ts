@@ -61,3 +61,38 @@ function reconstructBstHelper(
 
   return node
 }
+
+// Solution 2, O(n^2) time complexity, O(n) space complexity
+export function reconstructBst2(preOrderTraversalValues: number[]): BST | null {
+  return reconstructBstHelper2(
+    preOrderTraversalValues,
+    0,
+    preOrderTraversalValues.length
+  )
+}
+
+function reconstructBstHelper2(
+  nodesValues: number[],
+  idx: number,
+  limit: number
+) {
+  if (idx >= limit) return null
+
+  const node = new BST(nodesValues[idx])
+
+  const rightNode = nodesValues
+    .slice(idx + 1, limit)
+    .find(el => el >= node.value)
+  const rightNodeIdx = rightNode
+    ? nodesValues.findIndex((el, i) => el === rightNode && i > idx)
+    : null
+
+  node.left = reconstructBstHelper2(nodesValues, idx + 1, rightNodeIdx || limit)
+  node.right = reconstructBstHelper2(
+    nodesValues,
+    rightNodeIdx || Infinity,
+    limit
+  )
+
+  return node
+}
