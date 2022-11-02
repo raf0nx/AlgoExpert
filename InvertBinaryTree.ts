@@ -14,11 +14,11 @@ class BinaryTree {
 export function invertBinaryTree(tree: BinaryTree | null) {
   if (!tree) return null
 
-  const rightSubtree = tree.right
-  const leftSubtree = tree.left
+  swapLeftAndRightSubtree(tree)
+  invertBinaryTree(tree.left)
+  invertBinaryTree(tree.right)
+}
 
-  tree.left = invertBinaryTree(rightSubtree)
-  tree.right = invertBinaryTree(leftSubtree)
-
-  return tree
+function swapLeftAndRightSubtree(tree: BinaryTree) {
+  return ([tree.left, tree.right] = [tree.right, tree.left])
 }
