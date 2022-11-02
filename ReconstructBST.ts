@@ -17,7 +17,7 @@ export class BST {
 
 type IndexInfo = { index: number }
 
-// Solution 1, O(n) time complexity, O(h) space complexity where h is the height of the tree
+// Solution 1, O(n) time complexity, O(n) space complexity
 export function reconstructBst(preOrderTraversalValues: number[]): BST | null {
   const indexInfo: IndexInfo = { index: 0 }
 
