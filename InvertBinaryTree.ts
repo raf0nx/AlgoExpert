@@ -22,3 +22,14 @@ export function invertBinaryTree(tree: BinaryTree | null) {
 function swapLeftAndRightSubtree(tree: BinaryTree) {
   return ([tree.left, tree.right] = [tree.right, tree.left])
 }
+
+// Solution 2, O(n) time complexity, O(d) space complexity where d is the depth of the tree
+export function invertBinaryTree2(tree: BinaryTree | null) {
+  if (!tree) return null
+  ;[tree.left, tree.right] = [
+    invertBinaryTree2(tree.right),
+    invertBinaryTree2(tree.left),
+  ]
+
+  return tree
+}
