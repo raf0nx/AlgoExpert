@@ -32,3 +32,34 @@ function performInOrderTraverse(tree: BinaryTree | null, nodes: BinaryTree[]) {
 
   return nodes
 }
+
+// Solution 2, O(n) time complexity, O(1) space complexity
+type SuccessorInfo = {
+  precessorFound: boolean
+  node: BinaryTree | null
+}
+
+export function findSuccessor2(tree: BinaryTree, node: BinaryTree) {
+  const successorInfo: SuccessorInfo = { precessorFound: false, node: null }
+
+  findSuccessorHelper(tree, node, successorInfo)
+
+  return successorInfo.node
+}
+
+function findSuccessorHelper(
+  tree: BinaryTree | null,
+  node: BinaryTree,
+  successorInfo: SuccessorInfo
+) {
+  if (!tree || successorInfo.node) return
+
+  findSuccessorHelper(tree.left, node, successorInfo)
+
+  if (!successorInfo.node) {
+    if (successorInfo.precessorFound) successorInfo.node = tree
+    if (tree.value === node.value) successorInfo.precessorFound = true
+
+    findSuccessorHelper(tree.right, node, successorInfo)
+  }
+}
