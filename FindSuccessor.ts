@@ -20,7 +20,7 @@ export function findSuccessor(tree: BinaryTree, node: BinaryTree) {
 }
 
 function findNodesIndex(nodes: BinaryTree[], nodeToFind: BinaryTree) {
-  return nodes.findIndex(node => Object.is(node, nodeToFind))
+  return nodes.findIndex(node => node.value === nodeToFind.value)
 }
 
 function performInOrderTraverse(tree: BinaryTree | null, nodes: BinaryTree[]) {
