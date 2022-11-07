@@ -63,3 +63,28 @@ function findSuccessorHelper(
     findSuccessorHelper(tree.right, node, successorInfo)
   }
 }
+
+// Solution 3, O(h) time complexity, O(1) space complexity where h is the height of the tree
+export function findSuccessor3(tree: BinaryTree, node: BinaryTree) {
+  if (node.right) return findLeftMostNode(node.right)
+
+  return getNextInOrderTraverseAncestor(node)
+}
+
+function findLeftMostNode(node: BinaryTree) {
+  let currentNode = node
+
+  while (currentNode.left) {
+    currentNode = currentNode.left
+  }
+
+  return currentNode
+}
+
+function getNextInOrderTraverseAncestor(node: BinaryTree) {
+  let nodesParent = node.parent
+
+  return nodesParent && nodesParent.right === node
+    ? nodesParent.parent
+    : nodesParent
+}
