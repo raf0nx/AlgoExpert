@@ -12,33 +12,24 @@ export class BinaryTree {
 }
 
 // Solution 1, O(n) time complexity, O(h) space complexity
-type TreeInfo = {
-  isBalanced: boolean
-}
-
 export function heightBalancedBinaryTree(tree: BinaryTree) {
-  const treeInfo: TreeInfo = { isBalanced: true }
-
-  heightBalancedBinaryTreeHelper(tree, treeInfo)
-
-  return treeInfo.isBalanced
+  return heightBalancedBinaryTreeHelper(tree)[0]
 }
 
 export function heightBalancedBinaryTreeHelper(
-  tree: BinaryTree | null,
-  treeInfo: TreeInfo
-): number {
-  if (!tree) return 0
+  tree: BinaryTree | null
+): [boolean, number] {
+  if (!tree) return [true, 0]
 
-  const leftSubtreeHeight = heightBalancedBinaryTreeHelper(tree.left, treeInfo)
-  const rightSubtreeHeight = heightBalancedBinaryTreeHelper(
-    tree.right,
-    treeInfo
-  )
+  const [isLeftSubtreeBalanced, leftSubtreeHeight] =
+    heightBalancedBinaryTreeHelper(tree.left)
+  const [isRightSubtreeBalanced, rightSubtreeHeight] =
+    heightBalancedBinaryTreeHelper(tree.right)
 
-  if (Math.abs(leftSubtreeHeight - rightSubtreeHeight) > 1) {
-    treeInfo.isBalanced = false
-  }
+  const isBalanced =
+    isLeftSubtreeBalanced &&
+    isRightSubtreeBalanced &&
+    Math.abs(leftSubtreeHeight - rightSubtreeHeight) <= 1
 
-  return Math.max(leftSubtreeHeight, rightSubtreeHeight) + 1
+  return [isBalanced, Math.max(leftSubtreeHeight, rightSubtreeHeight) + 1]
 }
