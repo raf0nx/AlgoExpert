@@ -1,3 +1,4 @@
+// Solution 1, O(n) time complexity, O(n) space complexity
 export function maxSubsetSumNoAdjacent(array: number[]) {
   if (!array.length) return 0
 
