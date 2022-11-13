@@ -5,11 +5,9 @@ export function numberOfWaysToMakeChange(n: number, denoms: number[]) {
   )
 
   for (const denom of denoms) {
-    numOfWays.forEach((_, amount) => {
-      if (amount >= denom) {
-        numOfWays[amount] += numOfWays[amount - denom]
-      }
-    })
+    for (let amount = denom; amount < numOfWays.length; amount++) {
+      numOfWays[amount] += numOfWays[amount - denom]
+    }
   }
 
   return numOfWays[n]
