@@ -13,18 +13,21 @@ export function numberOfWaysToTraverseGraph(width: number, height: number) {
   return ways[height - 1][width - 1]
 }
 
-// Solution 2, O(w * h) time complexity, O(w) space complexity, where w is the width and h is the height
+// Solution 2, O(w * h) time complexity, O(min(w, h)) space complexity, where w is the width and h is the height
 export function numberOfWaysToTraverseGraph2(width: number, height: number) {
-  let prevRow = new Array(width).fill(1)
+  const smallerDim = width < height ? width : height
+  const biggerDim = width >= height ? width : height
+
+  let prevRow = new Array(smallerDim).fill(1)
   let currRow = [1]
 
-  for (let i = 1; i < height; i++) {
-    for (let j = 1; j < width; j++) {
+  for (let i = 1; i < biggerDim; i++) {
+    for (let j = 1; j < smallerDim; j++) {
       currRow[j] = currRow[j - 1] + prevRow[j]
     }
 
     prevRow = currRow
   }
 
-  return prevRow[width - 1]
+  return prevRow[smallerDim - 1]
 }
