@@ -31,3 +31,25 @@ export function numberOfWaysToTraverseGraph2(width: number, height: number) {
 
   return prevRow[smallerDim - 1]
 }
+
+// Solution 3, O(w + h) time complexity, O(1) space complexity, where w is the width and h is the height
+export function numberOfWaysToTraverseGraph3(width: number, height: number) {
+  const totalDownMoves = height - 1
+  const totalRightMoves = width - 1
+
+  return (
+    factorial(totalDownMoves + totalRightMoves) /
+    factorial(totalDownMoves) /
+    factorial(totalRightMoves)
+  )
+}
+
+function factorial(num: number) {
+  let result = 1
+
+  for (let i = num; i >= 2; i--) {
+    result *= i
+  }
+
+  return result
+}
