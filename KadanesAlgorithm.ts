@@ -1,5 +1,18 @@
 // Solution 1, O(n) time complexity, O(1) space complexity
 export function kadanesAlgorithm(array: number[]) {
+  let maxSum = array[0]
+  let currentMax = array[0]
+
+  for (let i = 1; i < array.length; i++) {
+    currentMax = Math.max(currentMax + array[i], array[i])
+    maxSum = Math.max(currentMax, maxSum)
+  }
+
+  return maxSum
+}
+
+// Solution 2, O(n) time complexity, O(1) space complexity
+export function kadanesAlgorithm2(array: number[]) {
   const largestValue = Math.max(...array)
   const largestValueIdx = array.indexOf(largestValue)
 
