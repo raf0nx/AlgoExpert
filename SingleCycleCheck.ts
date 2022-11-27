@@ -17,7 +17,7 @@ export function hasSingleCycle2(array: number[]) {
   let currIdx = 0
 
   while (jumpsLeft) {
-    if (currIdx === 0 && jumpsLeft < array.length - 1) return false
+    if (currIdx === 0 && jumpsLeft < array.length) return false
 
     currIdx = getNextIndex(currIdx, array[currIdx], array.length)
     jumpsLeft--
