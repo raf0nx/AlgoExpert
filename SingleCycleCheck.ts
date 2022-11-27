@@ -1,17 +1,14 @@
 // Solution 1, O(n) time complexity, O(1) space complexity
 export function hasSingleCycle(array: number[]) {
-  let jumpsLeft = array.length
-  let nextIndex = 0
-  let jumpBy = array[nextIndex]
+  let position = 0
 
-  while (jumpsLeft) {
-    nextIndex = getNextIndex(nextIndex, jumpBy, array.length)
-    jumpBy = array[nextIndex]
-    array[nextIndex] = 0
-    jumpsLeft--
+  while (array[position]) {
+    const currIdx = position
+    position = getNextIndex(position, array[position], array.length)
+    array[currIdx] = 0
   }
 
-  return nextIndex === 0 && jumpBy !== 0
+  return position === 0 && array.every(el => el === 0)
 }
 
 // Solution 2, O(n) time complexity, O(1) space complexity
