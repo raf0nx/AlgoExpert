@@ -11,7 +11,7 @@ export function hasSingleCycle(array: number[]) {
     jumpsLeft--
   }
 
-  return array.every(el => !el)
+  return nextIndex === 0 && jumpBy !== 0
 }
 
 function getNextIndex(
