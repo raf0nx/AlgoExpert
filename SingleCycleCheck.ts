@@ -21,5 +21,5 @@ function getNextIndex(
 ): number {
   const nextIdx = (currIdx + modifier) % bound
 
-  return nextIdx < 0 ? (nextIdx + bound) % bound : nextIdx
+  return nextIdx < 0 ? nextIdx + bound : nextIdx
 }
