@@ -1,6 +1,6 @@
 // Solution 1, O(wh) time complexity, O(wh) space complexity where w is the width and h is the height of the matrix
 export function riverSizes(matrix: number[][]) {
-  const visited: boolean[][] = Array.from({ length: matrix.length }, el =>
+  const visited: boolean[][] = Array.from({ length: matrix.length }, () =>
     new Array(matrix[0].length).fill(false)
   )
 
