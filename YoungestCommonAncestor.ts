@@ -33,3 +33,48 @@ function getAllAncestors(descendant: AncestralTree) {
 
   return ancestors
 }
+
+// Solution 2, O(d) time complexity, O(1) space complexity, where d is the depth of the tree
+export function getYoungestCommonAncestor2(
+  topAncestor: AncestralTree,
+  descendantOne: AncestralTree,
+  descendantTwo: AncestralTree
+) {
+  const descendantOneDepth = getDescendantDepth(descendantOne)
+  const descendantTwoDepth = getDescendantDepth(descendantTwo)
+
+  const depthDifference = Math.abs(descendantOneDepth - descendantTwoDepth)
+
+  return descendantOneDepth > descendantTwoDepth
+    ? backtrackAncestralTree(descendantOne, descendantTwo, depthDifference)
+    : backtrackAncestralTree(descendantTwo, descendantOne, depthDifference)
+}
+
+function getDescendantDepth(descendant: AncestralTree) {
+  let depth = 0
+
+  while (descendant.ancestor) {
+    depth += 1
+    descendant = descendant.ancestor
+  }
+
+  return depth
+}
+
+function backtrackAncestralTree(
+  lowerDescendant: AncestralTree,
+  upperDescendant: AncestralTree,
+  diff: number
+) {
+  while (diff > 0) {
+    lowerDescendant = lowerDescendant.ancestor!
+    diff -= 1
+  }
+
+  while (lowerDescendant !== upperDescendant) {
+    lowerDescendant = lowerDescendant.ancestor!
+    upperDescendant = upperDescendant.ancestor!
+  }
+
+  return lowerDescendant
+}
