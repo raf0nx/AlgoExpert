@@ -9,18 +9,17 @@ class AncestralTree {
   }
 }
 
-// Solution 1, O(n^2) time complexity, O(n) space complexity where n is the number of vertices in the graph
+// Solution 1, O(n) time complexity, O(n) space complexity where n is the number of vertices in the graph
 export function getYoungestCommonAncestor(
   topAncestor: AncestralTree,
   descendantOne: AncestralTree,
   descendantTwo: AncestralTree
 ) {
-  const descOneAncestors = getAllAncestors(descendantOne)
-  const descTwoAncestors = getAllAncestors(descendantTwo)
+  const descendantOneAncestors = new Set([...getAllAncestors(descendantOne)])
 
-  return [...descOneAncestors, ...descTwoAncestors].find(
-    (el, _, arr) => arr.indexOf(el) !== arr.lastIndexOf(el)
-  )
+  for (const ancestor of [...getAllAncestors(descendantTwo)]) {
+    if (descendantOneAncestors.has(ancestor)) return ancestor
+  }
 }
 
 function getAllAncestors(descendant: AncestralTree) {
