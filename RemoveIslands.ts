@@ -12,9 +12,7 @@ class IslandInfo {
 }
 
 export function removeIslands(matrix: number[][]): number[][] {
-  const visited = Array.from({ length: matrix.length }, (_, i) =>
-    new Array(matrix[i].length).fill(false)
-  )
+  const visited = initializeVisitedMatrix(matrix)
   const islandsToRemove: [number, number][] = []
 
   for (let row = 0; row < matrix.length; row++) {
@@ -51,12 +49,7 @@ function removeIslandsHelper(
 
   islandInfo.islandsPositions.push([row, col])
 
-  for (const [nextRow, nextCol] of [
-    [row - 1, col],
-    [row, col + 1],
-    [row + 1, col],
-    [row, col - 1],
-  ]) {
+  for (const [nextRow, nextCol] of getAllNeighborsPositions(row, col)) {
     removeIslandsHelper(matrix, visited, nextRow, nextCol, islandInfo)
   }
 }
