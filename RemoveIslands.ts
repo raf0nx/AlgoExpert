@@ -56,13 +56,11 @@ function removeIslandsHelper(
 
 // Solution 2, O(w * h) time complexity, O(w * h) space complexity, where w is the width and h is the height of the matrix
 export function removeIslands2(matrix: number[][]) {
-  const visited = initializeVisitedMatrix(matrix)
-
   for (let row = 0; row < matrix.length; row++) {
     for (let col = 0; col < matrix[row].length; col++) {
       if (!isBorder(matrix, row, col)) continue
 
-      findAllNonIslands(matrix, visited, row, col)
+      findAllNonIslands(matrix, row, col)
     }
   }
 
@@ -71,21 +69,15 @@ export function removeIslands2(matrix: number[][]) {
   return matrix
 }
 
-function findAllNonIslands(
-  matrix: number[][],
-  visited: boolean[][],
-  row: number,
-  col: number
-) {
-  if (isOutOfBound(matrix, row, col) || visited[row][col]) return
-  visited[row][col] = true
+function findAllNonIslands(matrix: number[][], row: number, col: number) {
+  if (isOutOfBound(matrix, row, col)) return
+  if (!matrix[row][col] || matrix[row][col] === 2) return
 
-  if (!matrix[row][col]) return
-  // Temporarily mark non-islands as 2 to convey they were also visited
+  // Temporarily mark non-islands as 2 to convey they were visited
   matrix[row][col] = 2
 
   for (const [nextRow, nextCol] of getAllNeighborsPositions(row, col)) {
-    findAllNonIslands(matrix, visited, nextRow, nextCol)
+    findAllNonIslands(matrix, nextRow, nextCol)
   }
 }
 
