@@ -27,3 +27,38 @@ function checkForCycle(
 
   return false
 }
+
+// Solution 2, O(v * e) time complexity, O(v) space complexity where v is the number of vertices and e is the number of edges
+export function cycleInGraph2(edges: number[][]) {
+  const visited = new Set<number>()
+
+  for (let vertex = 0; vertex < edges.length; vertex++) {
+    if (visited.has(vertex)) continue
+    if (findCycle(edges, vertex, visited)) return true
+  }
+
+  return false
+}
+
+function findCycle(
+  edges: number[][],
+  vertex: number,
+  visited: Set<number>,
+  currVisited = new Set<number>()
+): boolean {
+  visited.add(vertex)
+  currVisited.add(vertex)
+
+  for (const vertice of edges[vertex]) {
+    if (currVisited.has(vertice)) return true
+    if (
+      !visited.has(vertice) &&
+      findCycle(edges, vertice, visited, currVisited)
+    )
+      return true
+  }
+
+  currVisited.delete(vertex)
+
+  return false
+}
