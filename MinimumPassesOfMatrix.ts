@@ -1,55 +1,58 @@
 // Solution 1, O(w * h) time complexity, O(w * h) space complexity
 export function minimumPassesOfMatrix(matrix: number[][]) {
-  let nrOfPasses = 0
-  let negativesLeft = true
-
-  while (negativesLeft) {
-    const [negativesLeft, negativeRemoved] = removeNegatives(matrix)
-
-    if (!negativesLeft) return nrOfPasses
-    if (negativesLeft && !negativeRemoved) return -1
-
-    nrOfPasses += 1
-  }
-}
-
-function removeNegatives(matrix: number[][]) {
-  const visited = Array.from({ length: matrix.length }, () =>
-    new Array(matrix[0].length).fill(false)
+  const negatives = Array.from({ length: matrix.length }, (_, i) =>
+    new Array(matrix[i].length).fill(false)
   )
 
-  for (let i = 0; i < matrix.length; i++) {
-    for (let j = 0; j < matrix[i].length; j++) {
-      if (matrix[i][j] <= 0) continue
-      markNegativeNeighbors(matrix, visited, i, j)
-    }
-  }
+  return removeNegatives(matrix, negatives, 0)
+}
 
+function removeNegatives(
+  matrix: number[][],
+  negatives: boolean[][],
+  nrOfPasses: number
+): number {
   let negativesLeft = false
   let negativeRemoved = false
 
   for (let i = 0; i < matrix.length; i++) {
     for (let j = 0; j < matrix[i].length; j++) {
+      if (matrix[i][j] <= 0) continue
+      markNegativeNeighbors(matrix, negatives, i, j)
+    }
+  }
+
+  for (let i = 0; i < matrix.length; i++) {
+    for (let j = 0; j < matrix[i].length; j++) {
       if (!negativesLeft && matrix[i][j] < 0) negativesLeft = true
-      if (visited[i][j]) {
+      if (negatives[i][j]) {
         negativeRemoved = true
+        negatives[i][j] = false
         matrix[i][j] *= -1
       }
     }
   }
 
-  return [negativesLeft, negativeRemoved]
+  if (!negativesLeft) return nrOfPasses
+  if (negativesLeft && !negativeRemoved) return -1
+
+  return removeNegatives(matrix, negatives, nrOfPasses + 1)
 }
 
 function markNegativeNeighbors(
   matrix: number[][],
-  visited: boolean[][],
+  negatives: boolean[][],
   row: number,
   col: number
 ) {
   for (const [nRow, nCol] of getAllNeighbors(row, col)) {
-    if (isOutOfBound(matrix, nRow, nCol)) continue
-    if (matrix[nRow][nCol] < 0) visited[nRow][nCol] = true
+    if (
+      isOutOfBound(matrix, nRow, nCol) ||
+      matrix[nRow][nCol] >= 0 ||
+      negatives[nRow][nCol]
+    )
+      continue
+    negatives[nRow][nCol] = true
   }
 }
 
