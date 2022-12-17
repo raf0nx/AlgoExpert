@@ -15,16 +15,12 @@ function removeNegatives(
   let negativesLeft = false
   let negativeRemoved = false
 
-  for (let i = 0; i < matrix.length; i++) {
-    for (let j = 0; j < matrix[i].length; j++) {
-      if (matrix[i][j] <= 0) continue
-      markConvertableNegativeNeighbors(matrix, convertableNegatives, i, j)
-    }
-  }
+  markConvertableNegatives(matrix, convertableNegatives)
 
   for (let i = 0; i < matrix.length; i++) {
     for (let j = 0; j < matrix[i].length; j++) {
       if (!negativesLeft && matrix[i][j] < 0) negativesLeft = true
+
       if (convertableNegatives[i][j]) {
         negativeRemoved = true
         convertableNegatives[i][j] = false
@@ -39,20 +35,24 @@ function removeNegatives(
   return removeNegatives(matrix, convertableNegatives, nrOfPasses + 1)
 }
 
-function markConvertableNegativeNeighbors(
+function markConvertableNegatives(
   matrix: number[][],
-  convertableNegatives: boolean[][],
-  row: number,
-  col: number
+  convertableNegatives: boolean[][]
 ) {
-  for (const [nRow, nCol] of getAllNeighbors(row, col)) {
-    if (
-      isOutOfBound(matrix, nRow, nCol) ||
-      matrix[nRow][nCol] >= 0 ||
-      convertableNegatives[nRow][nCol]
-    )
-      continue
-    convertableNegatives[nRow][nCol] = true
+  for (let row = 0; row < matrix.length; row++) {
+    for (let col = 0; col < matrix[row].length; col++) {
+      if (matrix[row][col] <= 0) continue
+
+      for (const [nRow, nCol] of getAllNeighbors(row, col)) {
+        if (
+          isOutOfBound(matrix, nRow, nCol) ||
+          matrix[nRow][nCol] >= 0 ||
+          convertableNegatives[nRow][nCol]
+        )
+          continue
+        convertableNegatives[nRow][nCol] = true
+      }
+    }
   }
 }
 
