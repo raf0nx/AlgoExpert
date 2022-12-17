@@ -1,4 +1,4 @@
-// Solution 1, O(w * h) time complexity, O(w * h) space complexity
+// Solution 1, O((w * h) ^ 2) time complexity, O(w * h) space complexity
 export function minimumPassesOfMatrix(matrix: number[][]) {
   const convertableNegatives = Array.from({ length: matrix.length }, (_, i) =>
     new Array(matrix[i].length).fill(false)
