@@ -72,17 +72,17 @@ export function minimumPassesOfMatrix2(matrix: number[][]) {
   let [positivesPositions, negativesCount] =
     initializePositivesPositions(matrix)
 
-  let firstPassQueue: number[][] = positivesPositions
-  let nextPassQueue: number[][] = []
+  let currPassQueue: number[][] = positivesPositions
+  let currPassQueueLength = currPassQueue.length
   let nrOfPasses = 0
 
-  while (firstPassQueue.length) {
-    const [currRow, currCol] = firstPassQueue.shift()!
-    negativesCount -= convertNegatives(matrix, nextPassQueue, currRow, currCol)
+  while (currPassQueueLength) {
+    const [currRow, currCol] = currPassQueue.shift()!
+    currPassQueueLength -= 1
+    negativesCount -= convertNegatives(matrix, currPassQueue, currRow, currCol)
 
-    if (!firstPassQueue.length) {
-      firstPassQueue = nextPassQueue
-      nextPassQueue = []
+    if (!currPassQueueLength) {
+      currPassQueueLength = currPassQueue.length
       nrOfPasses += 1
     }
   }
@@ -92,7 +92,7 @@ export function minimumPassesOfMatrix2(matrix: number[][]) {
 
 function convertNegatives(
   matrix: number[][],
-  convertedNegativesPos: number[][],
+  currPassQueue: number[][],
   row: number,
   col: number
 ) {
@@ -101,9 +101,10 @@ function convertNegatives(
   for (const [currRow, currCol] of getNodesNeighbors(row, col)) {
     if (isOutOfBound(matrix, currRow, currCol) || matrix[currRow][currCol] >= 0)
       continue
+
     matrix[currRow][currCol] *= -1
     negativesRemoved += 1
-    convertedNegativesPos.push([currRow, currCol])
+    currPassQueue.push([currRow, currCol])
   }
 
   return negativesRemoved
