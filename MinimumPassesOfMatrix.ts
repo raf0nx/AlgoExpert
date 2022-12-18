@@ -67,6 +67,76 @@ function getAllNeighbors(row: number, col: number) {
   ]
 }
 
-function isOutOfBound(matrix: number[][], row: number, col: number) {
-  return row < 0 || row >= matrix.length || col < 0 || col >= matrix[row].length
+//  Solution 2, O(w * h) time complexity, O(w * h) space complexity
+export function minimumPassesOfMatrix2(matrix: number[][]) {
+  let [positivesPositions, negativesCount] =
+    initializePositivesPositions(matrix)
+
+  let firstPassQueue: number[][] = positivesPositions
+  let nextPassQueue: number[][] = []
+  let nrOfPasses = 0
+
+  while (firstPassQueue.length) {
+    const [currRow, currCol] = firstPassQueue.shift()!
+    negativesCount -= convertNegatives(matrix, nextPassQueue, currRow, currCol)
+
+    if (!firstPassQueue.length) {
+      firstPassQueue = nextPassQueue
+      nextPassQueue = []
+      nrOfPasses += 1
+    }
+  }
+
+  return negativesCount ? -1 : nrOfPasses - 1
 }
+
+function convertNegatives(
+  matrix: number[][],
+  convertedNegativesPos: number[][],
+  row: number,
+  col: number
+) {
+  let negativesRemoved = 0
+
+  for (const [currRow, currCol] of getNodesNeighbors(row, col)) {
+    if (isOutOfBound(matrix, currRow, currCol) || matrix[currRow][currCol] >= 0)
+      continue
+    matrix[currRow][currCol] *= -1
+    negativesRemoved += 1
+    convertedNegativesPos.push([currRow, currCol])
+  }
+
+  return negativesRemoved
+}
+
+function initializePositivesPositions(
+  matrix: number[][]
+): [number[][], number] {
+  const positivesPositions: number[][] = []
+  let negativesCount = 0
+
+  for (let i = 0; i < matrix.length; i++) {
+    for (let j = 0; j < matrix[i].length; j++) {
+      if (!matrix[i][j]) continue
+
+      if (matrix[i][j] < 0) {
+        negativesCount += 1
+        continue
+      }
+
+      positivesPositions.push([i, j])
+    }
+  }
+
+  return [positivesPositions, negativesCount]
+}
+
+const getNodesNeighbors = (row: number, col: number) => [
+  [row - 1, col],
+  [row, col + 1],
+  [row + 1, col],
+  [row, col - 1],
+]
+
+const isOutOfBound = (matrix: number[][], row: number, col: number) =>
+  row < 0 || row >= matrix.length || col < 0 || col >= matrix[row].length
