@@ -40,3 +40,28 @@ function checkForValidStartingCity(
 
   return true
 }
+
+// Solution 2, O(n) time complexity, O(1) space complexity
+export function validStartingCity2(
+  distances: number[],
+  fuel: number[],
+  mpg: number
+) {
+  let startingCity = 0
+
+  for (
+    let city = 0, fuelLeft = 0, lowestFuelVal = Infinity;
+    city < distances.length;
+    city++
+  ) {
+    if (fuelLeft < lowestFuelVal) {
+      startingCity = city
+      lowestFuelVal = fuelLeft
+    }
+
+    fuelLeft += fuel[city]
+    fuelLeft = Math.round((fuelLeft - distances[city] / mpg) * 100) / 100
+  }
+
+  return startingCity
+}
