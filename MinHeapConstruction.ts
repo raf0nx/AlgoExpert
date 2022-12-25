@@ -48,8 +48,7 @@ export class MinHeap {
   }
 
   peek() {
-    // Write your code here.
-    return -1
+    return this.heap[0]
   }
 
   remove() {
