@@ -7,25 +7,23 @@ export class MinHeap {
 
   buildHeap(array: number[]) {
     for (let i = array.length - 1; i >= 0; i--) {
-      this.siftDown(array, i)
+      this.siftDown(array, i, this.getChild(i), this.getChild(i, true))
     }
 
     return array
   }
 
-  siftDown(heap: number[], i: number) {
-    while (i < heap.length) {
-      const child1 = i * 2 + 1
-      const child2 = i * 2 + 2
-
-      if (!heap[child1] && !heap[child2]) return
-
+  siftDown(heap: number[], currIdx: number, child1: number, child2: number) {
+    while (heap[child1] || heap[child2]) {
       const smallerChild =
         heap[child1] < (heap[child2] || Infinity) ? child1 : child2
 
-      if (heap[i] > heap[smallerChild])
-        this.swapItemsInArray(heap, i, smallerChild)
-      i = smallerChild
+      if (heap[currIdx] > heap[smallerChild])
+        this.swapItemsInArray(heap, currIdx, smallerChild)
+
+      currIdx = smallerChild
+      child1 = this.getChild(currIdx)
+      child2 = this.getChild(currIdx, true)
     }
   }
 
@@ -44,7 +42,7 @@ export class MinHeap {
   remove() {
     this.swapItemsInArray(this.heap, 0, this.heap.length - 1)
     const removedItem = this.heap.pop()
-    this.siftDown(this.heap, 0)
+    this.siftDown(this.heap, 0, 1, 2)
 
     return removedItem
   }
@@ -62,5 +60,9 @@ export class MinHeap {
 
   getParent(i: number) {
     return Math.floor((i - 1) / 2)
+  }
+
+  getChild(i: number, secondChild = false) {
+    return i * 2 + (secondChild ? 2 : 1)
   }
 }
