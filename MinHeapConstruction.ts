@@ -30,9 +30,7 @@ export class MinHeap {
   }
 
   siftUp(child: number, parent: number) {
-    while (this.heap[parent]) {
-      if (this.heap[child] >= this.heap[parent]) return
-
+    while (this.heap[parent] && this.heap[child] < this.heap[parent]) {
       this.swapItemsInArray(this.heap, parent, child)
       child = parent
       parent = this.getParent(child)
