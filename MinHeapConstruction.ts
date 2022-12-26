@@ -6,7 +6,8 @@ export class MinHeap {
   }
 
   buildHeap(array: number[]) {
-    for (let i = array.length - 1; i >= 0; i--) {
+    const firstParentIdx = this.getParent(array.length - 1)
+    for (let i = firstParentIdx; i >= 0; i--) {
       this.siftDown(array, i, this.getChild(i), this.getChild(i, true))
     }
 
