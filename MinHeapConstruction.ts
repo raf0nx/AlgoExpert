@@ -18,16 +18,16 @@ export class MinHeap {
       const child1 = i * 2 + 1
       const child2 = i * 2 + 2
 
-      if (!child1 && !child2) return
+      if (!heap[child1] && !heap[child2]) return
 
-      if (child1 && !child2) {
+      if (heap[child1] && !heap[child2]) {
         if (heap[i] > heap[child1]) this.swapItemsInArray(heap, i, child1)
 
         i = child1
         continue
       }
 
-      if (!child1 && child2) {
+      if (!heap[child1] && heap[child2]) {
         if (heap[i] > heap[child2]) this.swapItemsInArray(heap, i, child2)
 
         i = child2
