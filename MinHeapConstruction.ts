@@ -5,6 +5,7 @@ export class MinHeap {
     this.heap = this.buildHeap(array)
   }
 
+  // O(n) time complexity, O(1) space complexity
   buildHeap(array: number[]) {
     const firstParentIdx = this.getParent(array.length - 1)
     for (let i = firstParentIdx; i >= 0; i--) {
@@ -14,6 +15,7 @@ export class MinHeap {
     return array
   }
 
+  // O(log(n)) time complexity, O(1) space complexity
   siftDown(heap: number[], currIdx: number, child1: number, child2: number) {
     while (heap[child1] || heap[child2]) {
       const smallerChild =
@@ -28,6 +30,7 @@ export class MinHeap {
     }
   }
 
+  // O(log(n)) time complexity, O(1) space complexity
   siftUp(child: number, parent: number) {
     while (this.heap[parent] && this.heap[child] < this.heap[parent]) {
       this.swapItemsInArray(this.heap, parent, child)
@@ -36,10 +39,12 @@ export class MinHeap {
     }
   }
 
+  // O(1) time complexity, O(1) space complexity
   peek() {
     return this.heap[0]
   }
 
+  // O(log(n)) time complexity, O(1) space complexity
   remove() {
     this.swapItemsInArray(this.heap, 0, this.heap.length - 1)
     const removedItem = this.heap.pop()
@@ -48,6 +53,7 @@ export class MinHeap {
     return removedItem
   }
 
+  // O(log(n)) time complexity, O(1) space complexity
   insert(value: number) {
     this.heap.push(value)
 
