@@ -29,8 +29,15 @@ export class MinHeap {
     }
   }
 
-  siftUp() {
-    // Write your code here.
+  siftUp(i: number) {
+    while (i >= 0) {
+      const parent = Math.floor((i - 1) / 2)
+
+      if (this.heap[i] >= this.heap[parent]) return
+
+      this.swapItemsInArray(this.heap, parent, i)
+      i = parent
+    }
   }
 
   peek() {
@@ -46,7 +53,8 @@ export class MinHeap {
   }
 
   insert(value: number) {
-    // Write your code here.
+    this.heap.push(value)
+    this.siftUp(this.heap.length - 1)
   }
 
   swapItemsInArray(array: number[], idx1: number, idx2: number) {
