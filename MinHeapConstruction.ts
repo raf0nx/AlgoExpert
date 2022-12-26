@@ -38,8 +38,11 @@ export class MinHeap {
   }
 
   remove() {
-    // Write your code here.
-    return -1
+    this.swapItemsInArray(this.heap, 0, this.heap.length - 1)
+    const removedItem = this.heap.pop()
+    this.siftDown(this.heap, 0)
+
+    return removedItem
   }
 
   insert(value: number) {
