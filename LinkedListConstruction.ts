@@ -30,27 +30,29 @@ export class DoublyLinkedList {
   insertBefore(node: Node, nodeToInsert: Node) {
     this.remove(nodeToInsert)
 
-    if (
-      nodeToInsert.value === node.value &&
-      node === this.head &&
-      node === this.tail
-    )
-      return
+    if (this.shouldNotUpdateLinkedList(node, nodeToInsert)) return
 
     if (node === this.head) {
       this.head = nodeToInsert
       nodeToInsert.next = node
       node.prev = nodeToInsert
     } else {
-      nodeToInsert.next = node
-      nodeToInsert.prev = node.prev
-      node.prev!.next = nodeToInsert
-      node.prev = nodeToInsert
+      this.swapNodeBindings(node, nodeToInsert)
     }
   }
 
   insertAfter(node: Node, nodeToInsert: Node) {
-    // Write your code here.
+    this.remove(nodeToInsert)
+
+    if (this.shouldNotUpdateLinkedList(node, nodeToInsert)) return
+
+    if (node === this.tail) {
+      this.tail = nodeToInsert
+      nodeToInsert.prev = node
+      node.next = nodeToInsert
+    } else {
+      this.swapNodeBindings(node, nodeToInsert)
+    }
   }
 
   insertAtPosition(position: number, nodeToInsert: Node) {
@@ -88,5 +90,20 @@ export class DoublyLinkedList {
     }
 
     return false
+  }
+
+  swapNodeBindings(node: Node, nodeToInsert: Node) {
+    nodeToInsert.next = node
+    nodeToInsert.prev = node.prev
+    node.prev!.next = nodeToInsert
+    node.prev = nodeToInsert
+  }
+
+  shouldNotUpdateLinkedList(node: Node, nodeToInsert: Node) {
+    return (
+      nodeToInsert.value === node.value &&
+      node === this.head &&
+      node === this.tail
+    )
   }
 }
