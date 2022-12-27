@@ -41,19 +41,18 @@ export class DoublyLinkedList {
   // O(1) time complexity, O(1) space compleity
   insertBefore(node: Node, nodeToInsert: Node) {
     if (nodeToInsert === this.head && nodeToInsert === this.tail) return
-    
-    this.remove(nodeToInsert)
 
-    if (node === this.head) {
+    this.remove(nodeToInsert)
+    nodeToInsert.prev = node.prev
+    nodeToInsert.next = node
+
+    if (!node.prev) {
       this.head = nodeToInsert
-      nodeToInsert.next = node
-      node.prev = nodeToInsert
     } else {
-      nodeToInsert.next = node
-      nodeToInsert.prev = node.prev
-      node.prev!.next = nodeToInsert
-      node.prev = nodeToInsert
+      node.prev.next = nodeToInsert
     }
+
+    node.prev = nodeToInsert
   }
 
   // O(1) time complexity, O(1) space compleity
@@ -61,17 +60,16 @@ export class DoublyLinkedList {
     if (nodeToInsert === this.head && nodeToInsert === this.tail) return
 
     this.remove(nodeToInsert)
+    nodeToInsert.prev = node
+    nodeToInsert.next = node.next
 
-    if (node === this.tail) {
+    if (!node.next) {
       this.tail = nodeToInsert
-      nodeToInsert.prev = node
-      node.next = nodeToInsert
     } else {
-      nodeToInsert.prev = node
-      nodeToInsert.next = node.next
-      node.next!.prev = nodeToInsert
-      node.next = nodeToInsert
+      node.next.prev = nodeToInsert
     }
+
+    node.next = nodeToInsert
   }
 
   // O(p) time complexity, O(1) space complexity, where p is the position
