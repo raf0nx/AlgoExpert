@@ -19,6 +19,7 @@ export class DoublyLinkedList {
     this.tail = null
   }
 
+  // O(1) time complexity, O(1) space compleity
   setHead(node: Node) {
     if (!this.head) {
       this.head = node
@@ -28,6 +29,7 @@ export class DoublyLinkedList {
     }
   }
 
+  // O(1) time complexity, O(1) space compleity
   setTail(node: Node) {
     if (!this.tail) {
       this.setHead(node)
@@ -36,6 +38,7 @@ export class DoublyLinkedList {
     }
   }
 
+  // O(1) time complexity, O(1) space compleity
   insertBefore(node: Node, nodeToInsert: Node) {
     this.remove(nodeToInsert)
 
@@ -51,6 +54,7 @@ export class DoublyLinkedList {
     }
   }
 
+  // O(1) time complexity, O(1) space compleity
   insertAfter(node: Node, nodeToInsert: Node) {
     this.remove(nodeToInsert)
 
@@ -66,6 +70,7 @@ export class DoublyLinkedList {
     }
   }
 
+  // O(p) time complexity, O(1) space complexity, where p is the position
   insertAtPosition(position: number, nodeToInsert: Node) {
     let currentNode = this.head
     let currPos = 1
@@ -85,6 +90,7 @@ export class DoublyLinkedList {
     this.setTail(nodeToInsert)
   }
 
+  // O(n) time complexity, O(1) space complexity
   removeNodesWithValue(value: number) {
     let currentNode = this.head
 
@@ -96,6 +102,7 @@ export class DoublyLinkedList {
     }
   }
 
+  // O(1) time complexity, O(1) space compleity
   remove(node: Node) {
     if (node === this.head) this.head = this.head.next
     if (node === this.tail) this.tail = this.tail.prev
@@ -107,6 +114,7 @@ export class DoublyLinkedList {
     node.prev = null
   }
 
+  // O(n) time complexity, O(1) space complexity
   containsNodeWithValue(value: number) {
     let currentNode = this.head
 
