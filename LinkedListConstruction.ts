@@ -20,7 +20,12 @@ export class DoublyLinkedList {
   }
 
   setHead(node: Node) {
-    // Write your code here.
+    if (!this.head) {
+      this.head = node
+      this.tail = node
+    } else {
+      this.insertBefore(this.head, node)
+    }
   }
 
   setTail(node: Node) {
