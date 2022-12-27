@@ -49,6 +49,9 @@ export class DoublyLinkedList {
 
     if (node.prev) node.prev.next = node.next
     if (node.next) node.next.prev = node.prev
+
+    node.next = null
+    node.prev = null
   }
 
   containsNodeWithValue(value: number) {
