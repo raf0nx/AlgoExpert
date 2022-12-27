@@ -117,12 +117,4 @@ export class DoublyLinkedList {
 
     return false
   }
-
-  shouldNotUpdateLinkedList(node: Node, nodeToInsert: Node) {
-    return (
-      nodeToInsert.value === node.value &&
-      node === this.head &&
-      node === this.tail
-    )
-  }
 }
