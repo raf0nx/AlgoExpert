@@ -40,7 +40,14 @@ export class DoublyLinkedList {
   }
 
   removeNodesWithValue(value: number) {
-    // Write your code here.
+    let currentNode = this.head
+
+    while (currentNode) {
+      const nextNode = currentNode.next
+
+      if (currentNode.value === value) this.remove(currentNode)
+      currentNode = nextNode
+    }
   }
 
   remove(node: Node) {
