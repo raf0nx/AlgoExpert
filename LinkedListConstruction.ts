@@ -51,8 +51,8 @@ export class DoublyLinkedList {
   }
 
   remove(node: Node) {
-    if (!node.prev) this.head = node.next
-    if (!node.next) this.tail = node.prev
+    if (node === this.head) this.head = this.head.next
+    if (node === this.tail) this.tail = this.tail.prev
 
     if (node.prev) node.prev.next = node.next
     if (node.next) node.next.prev = node.prev
