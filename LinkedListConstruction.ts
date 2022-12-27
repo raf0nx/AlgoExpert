@@ -48,7 +48,13 @@ export class DoublyLinkedList {
   }
 
   containsNodeWithValue(value: number) {
-    // Write your code here.
+    let currentNode = this.head
+
+    while (currentNode) {
+      if (currentNode.value === value) return true
+      currentNode = currentNode.next
+    }
+
     return false
   }
 }
