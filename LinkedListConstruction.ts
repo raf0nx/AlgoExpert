@@ -44,7 +44,11 @@ export class DoublyLinkedList {
   }
 
   remove(node: Node) {
-    // Write your code here.
+    if (!node.prev) this.head = node.next
+    if (!node.next) this.tail = node.prev
+
+    if (node.prev) node.prev.next = node.next
+    if (node.next) node.next.prev = node.prev
   }
 
   containsNodeWithValue(value: number) {
