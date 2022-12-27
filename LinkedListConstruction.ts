@@ -39,28 +39,30 @@ export class DoublyLinkedList {
   insertBefore(node: Node, nodeToInsert: Node) {
     this.remove(nodeToInsert)
 
-    if (this.shouldNotUpdateLinkedList(node, nodeToInsert)) return
-
     if (node === this.head) {
       this.head = nodeToInsert
       nodeToInsert.next = node
       node.prev = nodeToInsert
     } else {
-      this.swapNodeBindings(node, nodeToInsert)
+      nodeToInsert.next = node
+      nodeToInsert.prev = node.prev
+      node.prev!.next = nodeToInsert
+      node.prev = nodeToInsert
     }
   }
 
   insertAfter(node: Node, nodeToInsert: Node) {
     this.remove(nodeToInsert)
 
-    if (this.shouldNotUpdateLinkedList(node, nodeToInsert)) return
-
     if (node === this.tail) {
       this.tail = nodeToInsert
       nodeToInsert.prev = node
       node.next = nodeToInsert
     } else {
-      this.swapNodeBindings(node, nodeToInsert)
+      nodeToInsert.prev = node
+      nodeToInsert.next = node.next
+      node.next!.prev = nodeToInsert
+      node.next = nodeToInsert
     }
   }
 
@@ -114,13 +116,6 @@ export class DoublyLinkedList {
     }
 
     return false
-  }
-
-  swapNodeBindings(node: Node, nodeToInsert: Node) {
-    nodeToInsert.next = node
-    nodeToInsert.prev = node.prev
-    node.prev!.next = nodeToInsert
-    node.prev = nodeToInsert
   }
 
   shouldNotUpdateLinkedList(node: Node, nodeToInsert: Node) {
