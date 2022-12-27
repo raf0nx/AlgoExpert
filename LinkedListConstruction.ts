@@ -28,7 +28,25 @@ export class DoublyLinkedList {
   }
 
   insertBefore(node: Node, nodeToInsert: Node) {
-    // Write your code here.
+    this.remove(nodeToInsert)
+
+    if (
+      nodeToInsert.value === node.value &&
+      node === this.head &&
+      node === this.tail
+    )
+      return
+
+    if (node === this.head) {
+      this.head = nodeToInsert
+      nodeToInsert.next = node
+      node.prev = nodeToInsert
+    } else {
+      nodeToInsert.next = node
+      nodeToInsert.prev = node.prev
+      node.prev!.next = nodeToInsert
+      node.prev = nodeToInsert
+    }
   }
 
   insertAfter(node: Node, nodeToInsert: Node) {
