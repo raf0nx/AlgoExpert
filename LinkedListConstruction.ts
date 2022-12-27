@@ -29,7 +29,11 @@ export class DoublyLinkedList {
   }
 
   setTail(node: Node) {
-    // Write your code here.
+    if (!this.tail) {
+      this.setHead(node)
+    } else {
+      this.insertAfter(this.tail, node)
+    }
   }
 
   insertBefore(node: Node, nodeToInsert: Node) {
