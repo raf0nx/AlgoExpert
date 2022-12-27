@@ -40,6 +40,8 @@ export class DoublyLinkedList {
 
   // O(1) time complexity, O(1) space compleity
   insertBefore(node: Node, nodeToInsert: Node) {
+    if (nodeToInsert === this.head && nodeToInsert === this.tail) return
+    
     this.remove(nodeToInsert)
 
     if (node === this.head) {
@@ -56,6 +58,8 @@ export class DoublyLinkedList {
 
   // O(1) time complexity, O(1) space compleity
   insertAfter(node: Node, nodeToInsert: Node) {
+    if (nodeToInsert === this.head && nodeToInsert === this.tail) return
+
     this.remove(nodeToInsert)
 
     if (node === this.tail) {
