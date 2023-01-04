@@ -76,3 +76,19 @@ function getLinkedListLength(linkedList: LinkedList) {
 
   return length
 }
+
+// Solution 3, O(n + m) time complexity, O(1) space complexity, where n is the length of the first linked list and m is the length of the second linked list
+export function mergingLinkedLists3(
+  linkedListOne: LinkedList,
+  linkedListTwo: LinkedList
+) {
+  let ll1Node: LinkedList | null = linkedListOne
+  let ll2Node: LinkedList | null = linkedListTwo
+
+  while (ll1Node !== ll2Node) {
+    ll1Node = ll1Node ? ll1Node.next : linkedListTwo
+    ll2Node = ll2Node ? ll2Node.next : linkedListOne
+  }
+
+  return ll1Node
+}
