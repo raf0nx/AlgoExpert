@@ -11,23 +11,18 @@ export class BinaryTree {
   }
 }
 
-// Solution 1, O(n) time complexity, O(h) space complexity, where n is the number of nodes in the bigger tree and h is the height of the bigger tree
-export function mergeBinaryTrees(tree1: BinaryTree, tree2: BinaryTree) {
+// Solution 1, O(n) time complexity, O(h) space complexity, where n is the number of nodes in the smaller tree and h is the height of the smaller tree
+export function mergeBinaryTrees(
+  tree1: BinaryTree | null,
+  tree2: BinaryTree | null
+) {
+  if (!tree1) return tree2
+  if (!tree2) return tree1
+
   const root = new BinaryTree(tree1.value + tree2.value)
 
-  if (tree1.left || tree2.left) {
-    root.left = mergeBinaryTrees(
-      tree1.left || new BinaryTree(0),
-      tree2.left || new BinaryTree(0)
-    )
-  } else root.left = null
-
-  if (tree1.right || tree2.right) {
-    root.right = mergeBinaryTrees(
-      tree1.right || new BinaryTree(0),
-      tree2.right || new BinaryTree(0)
-    )
-  } else root.right = null
+  root.left = mergeBinaryTrees(tree1.left, tree2.left)
+  root.right = mergeBinaryTrees(tree1.right, tree2.right)
 
   return root
 }
