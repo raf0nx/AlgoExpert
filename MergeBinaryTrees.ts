@@ -27,6 +27,7 @@ export function mergeBinaryTrees(
   return root
 }
 
+// Solution 2, O(n) time complexity, O(h) space complexity, where n is the number of nodes in the smaller tree and h is the height of the smaller tree
 type TreesStack = { tree1Node: BinaryTree; tree2Node: BinaryTree | null }[]
 
 export function mergeBinaryTrees2(tree1: BinaryTree, tree2: BinaryTree) {
