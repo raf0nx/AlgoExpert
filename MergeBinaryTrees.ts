@@ -26,3 +26,31 @@ export function mergeBinaryTrees(
 
   return root
 }
+
+type TreesStack = { tree1Node: BinaryTree; tree2Node: BinaryTree | null }[]
+
+export function mergeBinaryTrees2(tree1: BinaryTree, tree2: BinaryTree) {
+  const stack: TreesStack = [{ tree1Node: tree1, tree2Node: tree2 }]
+
+  while (stack.length) {
+    let { tree1Node, tree2Node } = stack.pop()!
+
+    if (!tree2Node) continue
+
+    tree1Node.value += tree2Node.value
+
+    if (!tree1Node.left) {
+      tree1Node.left = tree2Node.left
+    } else {
+      stack.push({ tree1Node: tree1Node.left, tree2Node: tree2Node.left })
+    }
+
+    if (!tree1Node.right) {
+      tree1Node.right = tree2Node.right
+    } else {
+      stack.push({ tree1Node: tree1Node.right, tree2Node: tree2Node.right })
+    }
+  }
+
+  return tree1
+}
