@@ -35,3 +35,22 @@ export function symmetricalTree(tree: BinaryTree) {
 
   return true
 }
+
+// Solution 2, O(n) time complexity, O(h) space complexity where h is the height of the tree
+export function symmetricalTree2(tree: BinaryTree) {
+  return checkSubtreesSymmetry(tree.left, tree.right)
+}
+
+function checkSubtreesSymmetry(
+  treeLeft: BinaryTree | null,
+  treeRight: BinaryTree | null
+): boolean {
+  if (!treeLeft && !treeRight) return true
+  if (!treeLeft || !treeRight || treeLeft.value !== treeRight.value)
+    return false
+
+  return (
+    checkSubtreesSymmetry(treeLeft.left, treeRight.right) &&
+    checkSubtreesSymmetry(treeLeft.right, treeRight.left)
+  )
+}
