@@ -14,18 +14,18 @@ export class UnionFind {
     this.ranks[value] = 0
   }
 
-  // O(log(n)) time complexity, O(1) space complexity, where n is the total number of values
+  // O(α(n)) time complexity, O(1) space complexity, where n is the total number of values
   find(value: number) {
     if (!(value in this.parents)) return null
 
-    while (value !== this.parents[value]) {
-      value = this.parents[value]
+    if (value !== this.parents[value]) {
+      this.parents[value] = this.find(this.parents[value])!
     }
 
-    return value
+    return this.parents[value]
   }
 
-  // O(log(n)) time complexity, O(1) space complexity, where n is the total number of values
+  // O(α(n)) time complexity, O(1) space complexity, where n is the total number of values
   union(valueOne: number, valueTwo: number) {
     const val1Parent = this.find(valueOne)
     const val2Parent = this.find(valueTwo)
