@@ -23,3 +23,18 @@ function powersetHelper(
     }
   }
 }
+
+// Solution 2, O(n * 2^n) time complexity, O(n * 2^n) space complexity
+export function powerset2(array: number[]) {
+  const subsets: number[][] = [[]]
+
+  for (const num of array) {
+    const subsetsLength = subsets.length
+
+    for (let i = 0; i < subsetsLength; i++) {
+      subsets.push([...subsets[i], num])
+    }
+  }
+
+  return subsets
+}
