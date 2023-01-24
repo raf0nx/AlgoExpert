@@ -38,3 +38,22 @@ export function powerset2(array: number[]) {
 
   return subsets
 }
+
+// Solution 3, O(n * 2^n) time complexity, O(n * 2^n) space complexity
+export function powerset3(
+  array: number[],
+  idx: number | null = null
+): number[][] {
+  if (idx === null) idx = array.length - 1
+  if (idx < 0) return [[]]
+
+  const currNum = array[idx]
+  const subsets = powerset3(array, idx - 1)
+  const subsetsLength = subsets.length
+
+  for (let i = 0; i < subsetsLength; i++) {
+    subsets.push([...subsets[i], currNum])
+  }
+
+  return subsets
+}
