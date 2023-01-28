@@ -41,3 +41,22 @@ export function staircaseTraversal2(height: number, maxSteps: number) {
 
   return waysToTop[height]
 }
+
+// Solution 3, O(n) time complexity, O(n) space complexity, where n is the height
+export function staircaseTraversal3(height: number, maxSteps: number) {
+  const waysToTop = [1]
+
+  let currNumOfWays = 0
+
+  for (let currHeight = 1; currHeight <= height; currHeight++) {
+    const startOfWindow = currHeight - 1 - maxSteps
+    const endOfWindow = currHeight - 1
+
+    currNumOfWays -= waysToTop[startOfWindow] || 0
+    currNumOfWays += waysToTop[endOfWindow]
+
+    waysToTop.push(currNumOfWays)
+  }
+
+  return waysToTop[height]
+}
