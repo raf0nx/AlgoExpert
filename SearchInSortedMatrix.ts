@@ -22,3 +22,22 @@ export function searchInSortedMatrix(
 
   return [-1, -1]
 }
+
+// Solution 2, O(n + m) time complexity, O(1) space complexity, where n is the number of rows and m is the number of columns
+export function searchInSortedMatrix2(
+  matrix: number[][],
+  target: number
+): Range {
+  let row = 0
+  let col = matrix[0].length - 1
+
+  while (row < matrix.length && col >= 0) {
+    const currNum = matrix[row][col]
+
+    if (currNum === target) return [row, col]
+    else if (currNum < target) row += 1
+    else col -= 1
+  }
+
+  return [-1, -1]
+}
