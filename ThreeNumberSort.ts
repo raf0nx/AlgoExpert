@@ -29,15 +29,11 @@ export function threeNumberSort2(array: number[], order: number[]) {
   }
 
   for (let i = 0; i < order.length; i++) {
-    const numsToPopulate = orderNumCount[i]
-    const value = order[i]
+    const numsPopulated = orderNumCount.slice(0, i).reduce((a, b) => a + b, 0)
+    const lastNumToPopulate = numsPopulated + orderNumCount[i] - 1
 
-    const numOfElementsBefore = orderNumCount
-      .slice(0, i)
-      .reduce((a, b) => a + b, 0)
-    for (let j = 0; j < numsToPopulate; j++) {
-      const currIdx = numOfElementsBefore + j
-      array[currIdx] = value
+    for (let j = numsPopulated; j <= lastNumToPopulate; j++) {
+      array[j] = order[i]
     }
   }
 
