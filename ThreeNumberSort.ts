@@ -48,14 +48,14 @@ export function threeNumberSort3(array: number[], order: number[]) {
 
   for (let i = firstElemPos; i < array.length; i++) {
     if (array[i] !== firstOrderElem) continue
-    ;[array[firstElemPos], array[i]] = [array[i], array[firstElemPos]]
+    swap(array, firstElemPos, i)
     firstElemPos++
   }
 
   let lastElemPos = array.length - 1
   for (let i = lastElemPos; i >= 0; i--) {
     if (array[i] !== lastOrderElem) continue
-    ;[array[lastElemPos], array[i]] = [array[i], array[lastElemPos]]
+    swap(array, lastElemPos, i)
     lastElemPos--
   }
 
