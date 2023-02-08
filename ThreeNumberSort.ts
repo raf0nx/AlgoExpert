@@ -61,3 +61,33 @@ export function threeNumberSort3(array: number[], order: number[]) {
 
   return array
 }
+
+// Solution 4, O(n) time complexity, O(1) space complexity
+export function threeNumberSort4(array: number[], order: number[]) {
+  let firstElemPos = 0
+  let secondElemPos = 0
+  let lastElemPos = array.length - 1
+
+  while (secondElemPos <= lastElemPos) {
+    switch (array[secondElemPos]) {
+      case order[0]:
+        swap(array, firstElemPos, secondElemPos)
+        firstElemPos++
+        secondElemPos++
+        break
+      case order[1]:
+        secondElemPos++
+        break
+      case order[2]:
+        swap(array, secondElemPos, lastElemPos)
+        lastElemPos--
+        break
+    }
+  }
+
+  return array
+}
+
+function swap(array: any[], firstIdx: number, secondIdx: number) {
+  ;[array[firstIdx], array[secondIdx]] = [array[secondIdx], array[firstIdx]]
+}
