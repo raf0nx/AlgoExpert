@@ -13,3 +13,19 @@ export function commonCharacters(strings: string[]): string[] {
 function deduplicateStrings(strings: string[]): string[] {
   return strings.map(str => [...new Set(str)].join(''))
 }
+
+// Solution 2, O(n * m) time complexity, O(c) space complexity
+// where n is the number of strings, m is the length of the longest string and c is the number of unique characters
+export function commonCharacters2(strings: string[]) {
+  const charMap: Record<string, number> = {}
+
+  for (const string of strings) {
+    const characters = new Set(string)
+
+    for (const char of characters) {
+      charMap[char] = (charMap[char] || 0) + 1
+    }
+  }
+
+  return Object.keys(charMap).filter(char => charMap[char] === strings.length)
+}
