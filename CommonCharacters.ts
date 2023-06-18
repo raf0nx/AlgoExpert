@@ -1,4 +1,5 @@
 // Solution 1, O(n * m + k) time complexity, O(n * m + k) space complexity
+// where n is the number of input strings, m is the average length of the strings, and k is the total length of the joined strings.
 export function commonCharacters(strings: string[]): string[] {
   const joinedStrings = deduplicateStrings(strings).join('')
   const charMap: Record<string, number> = {}
