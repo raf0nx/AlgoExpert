@@ -62,3 +62,17 @@ function retrieveMiddleNode2(linkedList: LinkedList, middleNodeNumber: number) {
 
   return middleNode
 }
+
+// Solution 3, O(n) time complexity, O(1) space complexity
+// where n is the number of nodes in the linked list
+export function middleNode3(linkedList: LinkedList) {
+  let slowNode = linkedList
+  let fastNode: LinkedList | null = linkedList
+
+  while (fastNode && fastNode.next) {
+    slowNode = slowNode.next!
+    fastNode = fastNode.next.next
+  }
+
+  return slowNode
+}
