@@ -30,3 +30,30 @@ export function commonCharacters2(strings: string[]) {
 
   return Object.keys(charMap).filter(char => charMap[char] === strings.length)
 }
+
+// Solution 3, O(n * m) time complexity, O(m) space complexity
+// where n is the number of strings and m is the length of the longest string
+export function commonCharacters3(strings: string[]) {
+  const smallestString = findSmallestString(strings)
+  const potentialCommonCharacters = new Set(smallestString)
+
+  for (const string of strings) {
+    const uniqueCharacters = new Set(string)
+
+    for (const char of potentialCommonCharacters) {
+      if (uniqueCharacters.has(char)) continue
+
+      potentialCommonCharacters.delete(char)
+    }
+  }
+
+  return [...potentialCommonCharacters]
+}
+
+function findSmallestString(strings: string[]) {
+  return strings.reduce((smallestString, currString) => {
+    return currString.length < smallestString.length
+      ? currString
+      : smallestString
+  }, strings[0])
+}
