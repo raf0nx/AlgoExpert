@@ -22,7 +22,7 @@ export function transposeMatrix(matrix: Matrix) {
 
 function createTranspondedNumbersMatrix(matrix: Matrix) {
   return Array.from(matrix, (row, i) =>
-    row.map((num, j) => (i === j ? true : false))
+    row.map((_, j) => (i === j ? true : false))
   )
 }
 
