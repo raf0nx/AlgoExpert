@@ -53,3 +53,27 @@ function removeUndefined(array: number[]) {
 function removeEmptyArrays(matrix: Matrix) {
   return matrix.filter(row => row.length)
 }
+
+// Solution 2, O(w * h) time complexity, O(w * h) space complexity
+// where w is the width of the matrix and h is the height of the matrix
+export function transposeMatrix2(matrix: number[][]) {
+  const transposedMatrix: number[][] = []
+
+  let row = 0
+  let col = 0
+
+  while (col < matrix[0].length) {
+    if (!transposedMatrix[col]) transposedMatrix.push([])
+
+    transposedMatrix[col].push(matrix[row][col])
+
+    row += 1
+
+    if (row >= matrix.length) {
+      row = 0
+      col += 1
+    }
+  }
+
+  return transposedMatrix
+}
