@@ -33,3 +33,26 @@ function findNextGreaterElement(array: number[]) {
 function getNextCircularIndex(currIdx: number, arrayLength: number) {
   return (currIdx + 1) % arrayLength
 }
+
+// Solution 2, O(n) time complexity, O(n) space complexity
+// where n is the number of elements in the input array
+export function nextGreaterElement2(array: number[]) {
+  const output = new Array(array.length).fill(-1)
+  const stack: number[] = []
+
+  for (let i = 0; i < 2 * array.length; i++) {
+    const circularIndex = i % array.length
+
+    while (
+      stack.length &&
+      array[circularIndex] > array[stack[stack.length - 1]]
+    ) {
+      const top = stack.pop()!
+      output[top] = array[circularIndex]
+    }
+
+    stack.push(circularIndex)
+  }
+
+  return output
+}
