@@ -56,3 +56,29 @@ export function nextGreaterElement2(array: number[]) {
 
   return output
 }
+
+// Solution 3, O(n) time complexity, O(n) space complexity
+// where n is the number of elements in the input array
+export function nextGreaterElement3(array: number[]) {
+  const output = new Array(array.length).fill(-1)
+  const stack: number[] = []
+
+  for (let i = 2 * array.length - 1; i >= 0; i--) {
+    const circularIndex = i % array.length
+
+    while (stack.length) {
+      if (stack[stack.length - 1] > array[circularIndex]) {
+        output[circularIndex] = stack[stack.length - 1]
+        break
+      }
+
+      if (stack[stack.length - 1] <= array[circularIndex]) {
+        stack.pop()
+      }
+    }
+
+    stack.push(array[circularIndex])
+  }
+
+  return output
+}
