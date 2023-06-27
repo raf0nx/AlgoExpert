@@ -1,4 +1,4 @@
-// Solution 1, O(n^3) time complexity, O(1) space complexity
+// Solution 1, O(n^3) time complexity, O(n) space complexity
 // where n is the length of the string
 export function longestPalindromicSubstring(string: string) {
   let longestSubstring = ''
