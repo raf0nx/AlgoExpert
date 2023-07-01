@@ -50,3 +50,24 @@ function getCharFrequencyMap(string: string) {
 
   return charMap
 }
+
+// Solution 2, O(w * n * log(n)) time complexity, O(w * n) space complexity
+// where w is the number of words and n is the length of the longest word
+export function groupAnagrams2(words: string[]) {
+  const anagramsGroup: string[][] = []
+  const anagramsGroupPlacement: Record<string, number> = {}
+
+  for (let i = 0; i < words.length; i++) {
+    const sortedWord = words[i].split('').sort().join('')
+
+    if (sortedWord in anagramsGroupPlacement) {
+      anagramsGroup[anagramsGroupPlacement[sortedWord]].push(words[i])
+      continue
+    }
+
+    anagramsGroupPlacement[sortedWord] = i
+    anagramsGroup.push([words[i]])
+  }
+
+  return anagramsGroup
+}
