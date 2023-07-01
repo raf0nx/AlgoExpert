@@ -1,4 +1,4 @@
-// Solution 1, O(w * n^2) time complexity, O(w * n) space complexity
+// Solution 1, O(w^2 * n) time complexity, O(w + n) space complexity
 // where w is the number of words and n is the length of the longest word
 export function groupAnagrams(words: string[]) {
   const wordsChecked = new Array(words.length).fill(0)
