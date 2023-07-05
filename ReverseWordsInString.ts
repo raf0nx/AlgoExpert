@@ -24,3 +24,28 @@ export function reverseWordsInString(string: string) {
 
   return result.join('')
 }
+
+// Solution 2, O(n) time complexity, O(n) space complexity
+// where n is the length of the string
+export function reverseWordsInString2(string: string) {
+  const result: string[] = []
+  const words: string[] = []
+  let currentWord: string[] = []
+
+  for (const char of string) {
+    if (char.trim()) {
+      currentWord.push(char)
+    } else {
+      words.push(currentWord.join(''), char)
+      currentWord = []
+    }
+  }
+
+  words.push(currentWord.join(''))
+
+  for (let i = words.length - 1; i >= 0; i--) {
+    result.push(words[i])
+  }
+
+  return result.join('')
+}
