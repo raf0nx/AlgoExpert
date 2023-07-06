@@ -1,26 +1,28 @@
-// Solution 1, O(n * m + p) time complexity, O(m + p) space complexity
-// where n is the number of words, m is the length of the longest word, and p is the total number of unique characters in all the words
+// Solution 1, O(n * l) time complexity, O(c) space complexity
+// where n is the number of words, l is the length of the longest word, and c is the total number of unique characters in all the words
 export function minimumCharactersForWords(words: string[]) {
   const result: string[] = []
-  const minCharCount: Record<string, number> = {}
+  const maxCharFrequencies: Record<string, number> = {}
 
   for (const word of words) {
-    const wordCharCount: Record<string, number> = {}
+    const charFrequencies: Record<string, number> = {}
 
     for (const char of word) {
-      wordCharCount[char] = (wordCharCount[char] || 0) + 1
+      charFrequencies[char] = (charFrequencies[char] || 0) + 1
     }
 
-    for (const char in wordCharCount) {
-      if (minCharCount[char] > wordCharCount[char]) continue
+    for (const char in charFrequencies) {
+      if (maxCharFrequencies[char] > charFrequencies[char]) continue
 
-      minCharCount[char] = wordCharCount[char]
+      maxCharFrequencies[char] = charFrequencies[char]
     }
   }
 
-  for (const [key, value] of Object.entries(minCharCount)) {
-    result.push(...new Array(value).fill(key))
-  }
+  Object.entries(maxCharFrequencies).forEach(([char, frequency]) => {
+    for (let i = 0; i < frequency; i++) {
+      result.push(char)
+    }
+  })
 
   return result
 }
