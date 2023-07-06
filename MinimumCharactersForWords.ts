@@ -1,4 +1,4 @@
-// Solution 1, O(n * m + p) time complexity, O(n * m + p) space complexity
+// Solution 1, O(n * m + p) time complexity, O(m + p) space complexity
 // where n is the number of words, m is the length of the longest word, and p is the total number of unique characters in all the words
 export function minimumCharactersForWords(words: string[]) {
   const result: string[] = []
