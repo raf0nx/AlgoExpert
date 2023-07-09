@@ -19,3 +19,30 @@ export function bestDigits(number: string, numDigits: number) {
 
   return result.join('')
 }
+
+// Solution 2, O(n) time complexity, O(n) space complexity
+// where n is the length of the input string
+export function bestDigits2(number: string, numDigits: number) {
+  const digitsStack: string[] = []
+  let numsToRemove = numDigits
+
+  for (const digit of number) {
+    while (
+      digitsStack.length &&
+      numsToRemove &&
+      digit > digitsStack[digitsStack.length - 1]
+    ) {
+      digitsStack.pop()
+      numsToRemove -= 1
+    }
+
+    digitsStack.push(digit)
+  }
+
+  while (numsToRemove) {
+    digitsStack.pop()
+    numsToRemove -= 1
+  }
+
+  return digitsStack.join('')
+}
