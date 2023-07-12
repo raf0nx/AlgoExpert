@@ -8,12 +8,17 @@ export function bestDigits(number: string, numDigits: number) {
   while (numsToRemove) {
     const nextIdx = (i + 1) % result.length
 
-    if (result[i] <= result[nextIdx]) {
+    if (result[i] < result[nextIdx]) {
       result.splice(i, 1)
       numsToRemove -= 1
       i = 0
     } else {
       i = nextIdx
+    }
+
+    while (nextIdx === 0 && numsToRemove) {
+      result.pop()
+      numsToRemove -= 1
     }
   }
 
