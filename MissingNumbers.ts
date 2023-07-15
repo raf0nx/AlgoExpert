@@ -25,12 +25,10 @@ export function missingNumbers(nums: number[]) {
 // Solution 2, O(n) time complexity, O(n) space complexity
 // where n is the length of the nums array
 export function missingNumbers2(nums: number[]) {
-  const lastNum = nums.length + 2
   const numsSet = new Set(nums)
-  const allNumsRange = Array.from({ length: lastNum }, (_, i) => i + 1)
   const missingNums: number[] = []
 
-  for (const num of allNumsRange) {
+  for (let num = 1; num < nums.length + 3; num++) {
     if (numsSet.has(num)) continue
 
     missingNums.push(num)
