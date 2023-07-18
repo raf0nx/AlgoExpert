@@ -36,9 +36,5 @@ export function oneEdit(stringOne: string, stringTwo: string) {
     twoPointer += 1
   }
 
-  if (onePointer < lengthOne || twoPointer < lengthTwo) {
-    charsDifferenceCount += 1
-  }
-
   return charsDifferenceCount <= 1
 }
