@@ -1,5 +1,5 @@
 // Solution 1, O(n) time complexity, O(1) space complexity
-// where n is the length of the longer string
+// where n is the length of the shorter string
 export function oneEdit(stringOne: string, stringTwo: string) {
   const lengthOne = stringOne.length
   const lengthTwo = stringTwo.length
