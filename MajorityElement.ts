@@ -22,3 +22,25 @@ export function majorityElement(array: number[]) {
 
   return majorElem
 }
+
+// Solution 2, O(n) time complexity, O(1) space complexity
+// where n is the length of the input array
+export function majorityElement2(array: number[]) {
+  let answer = array[0]
+  let count = 0
+
+  for (const num of array) {
+    if (num === answer) {
+      count += 1
+    } else {
+      count -= 1
+    }
+
+    if (count === 0) {
+      answer = num
+      count = 1
+    }
+  }
+
+  return answer
+}
