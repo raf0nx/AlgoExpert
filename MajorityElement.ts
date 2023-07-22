@@ -30,15 +30,12 @@ export function majorityElement2(array: number[]) {
   let count = 0
 
   for (const num of array) {
+    if (count === 0) answer = num
+
     if (num === answer) {
       count += 1
     } else {
       count -= 1
-    }
-
-    if (count === 0) {
-      answer = num
-      count = 1
     }
   }
 
