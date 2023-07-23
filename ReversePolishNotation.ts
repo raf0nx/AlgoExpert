@@ -17,7 +17,7 @@ export function reversePolishNotation(tokens: string[]) {
     }
   }
 
-  return stack[0]
+  return stack.pop()
 }
 
 function evaluate(num1: number, num2: number, operator: Operators) {
