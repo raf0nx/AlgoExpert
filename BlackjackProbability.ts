@@ -58,5 +58,5 @@ export function blackjackProbability2(
 
   memo[startingHand] = result
 
-  return result
+  return +result.toFixed(3)
 }
