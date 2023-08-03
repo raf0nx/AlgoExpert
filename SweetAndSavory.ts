@@ -19,7 +19,7 @@ export function sweetAndSavory(dishes: number[], target: number) {
       }
 
       const currentFlavorSum = dishes[i] + dishes[j]
-      const currentFlavorTargetDiff = Math.abs(target - currentFlavorSum)
+      const currentFlavorTargetDiff = target - currentFlavorSum
 
       if (
         currentFlavorTargetDiff < bestFlavorTargetDiff &&
