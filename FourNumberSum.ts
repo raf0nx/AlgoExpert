@@ -32,3 +32,36 @@ export function fourNumberSum(array: number[], targetSum: number) {
 
   return result
 }
+
+// Solution 2, Avg: O(n^2) time complexity, O(n^2) space complexity
+// Worst: O(n^3) time complexity, O(n^2) space complexity
+// where n is the length of the input array
+export function fourNumberSum2(array: number[], targetSum: number) {
+  let result: Quadruplet[] = []
+  const sumHash: Record<number, [number, number][]> = {}
+
+  for (let i = 1; i < array.length; i++) {
+    for (let j = i + 1; j < array.length; j++) {
+      const currentSum = array[i] + array[j]
+      const targetSumDiff = targetSum - currentSum
+
+      if (sumHash[targetSumDiff]) {
+        for (const pair of sumHash[targetSumDiff]) {
+          result.push([pair[0], pair[1], array[i], array[j]])
+        }
+      }
+    }
+
+    for (let k = 0; k < i; k++) {
+      const currentSum = array[i] + array[k]
+
+      if (sumHash[currentSum]) {
+        sumHash[currentSum].push([array[i], array[k]])
+      } else {
+        sumHash[currentSum] = [[array[i], array[k]]]
+      }
+    }
+  }
+
+  return result
+}
