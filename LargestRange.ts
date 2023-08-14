@@ -24,3 +24,46 @@ export function largestRange(array: number[]): [number, number] {
 
   return result
 }
+
+// Solution 2, O(n) time complexity, O(n) space complexity
+// where n is the length of the input array
+export function largestRange2(array: number[]): [number, number] {
+  const numMap: Record<number, boolean> = {}
+  const bestRange: [number, number] = [-1, -1]
+  let maxRange = -Infinity
+
+  for (const num of array) {
+    if (!numMap[num]) {
+      numMap[num] = false
+    }
+  }
+
+  for (const num of array) {
+    if (numMap[num]) continue
+
+    let currentRange = 1
+    numMap[num] = true
+
+    let leftNumber = num - 1
+    while (leftNumber in numMap) {
+      numMap[leftNumber] = true
+      currentRange += 1
+      leftNumber -= 1
+    }
+
+    let rightNumber = num + 1
+    while (rightNumber in numMap) {
+      numMap[rightNumber] = true
+      currentRange += 1
+      rightNumber += 1
+    }
+
+    if (currentRange > maxRange) {
+      maxRange = currentRange
+      bestRange[0] = leftNumber + 1
+      bestRange[1] = rightNumber - 1
+    }
+  }
+
+  return bestRange
+}
