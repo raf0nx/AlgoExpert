@@ -49,3 +49,23 @@ function findNextMinNumIdx(array: number[], visited: Set<number>) {
 
   return minValueIdx
 }
+
+// Solution 2, O(n) time complexity, O(n) space complexity
+// where n is the length of the input array
+export function minRewards2(scores: number[]) {
+  const rewards = Array(scores.length).fill(1)
+
+  for (let i = 1; i < scores.length; i++) {
+    if (scores[i] > scores[i - 1]) {
+      rewards[i] = rewards[i - 1] + 1
+    }
+  }
+
+  for (let i = scores.length - 2; i >= 0; i--) {
+    if (scores[i] > scores[i + 1]) {
+      rewards[i] = Math.max(rewards[i], rewards[i + 1] + 1)
+    }
+  }
+
+  return rewards.reduce((a, b) => a + b, 0)
+}
