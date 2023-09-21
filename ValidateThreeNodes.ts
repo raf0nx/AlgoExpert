@@ -30,3 +30,33 @@ function checkNodeDescendant(ancestor: BST | null, descendant: BST): boolean {
     ? checkNodeDescendant(ancestor.left, descendant)
     : checkNodeDescendant(ancestor.right, descendant)
 }
+
+// Solution 2, O(h) time complexity, O(1) space complexity
+// where h is the height of the tree
+export function validateThreeNodes2(
+  nodeOne: BST,
+  nodeTwo: BST,
+  nodeThree: BST
+) {
+  return (
+    (checkNodeDescendant2(nodeOne, nodeTwo) &&
+      checkNodeDescendant2(nodeTwo, nodeThree)) ||
+    (checkNodeDescendant2(nodeThree, nodeTwo) &&
+      checkNodeDescendant2(nodeTwo, nodeOne))
+  )
+}
+
+function checkNodeDescendant2(ancestor: BST | null, descendant: BST): boolean {
+  let currentNode = ancestor
+
+  while (currentNode) {
+    if (currentNode.value === descendant.value) return true
+
+    currentNode =
+      descendant.value < currentNode.value
+        ? currentNode.left
+        : currentNode.right
+  }
+
+  return false
+}
