@@ -60,3 +60,58 @@ function checkNodeDescendant2(ancestor: BST | null, descendant: BST): boolean {
 
   return false
 }
+
+// Solution 3, O(d) time complexity, O(1) space complexity
+// where d is the distance between nodeOne and nodeThree
+export function validateThreeNodes3(
+  nodeOne: BST,
+  nodeTwo: BST,
+  nodeThree: BST
+) {
+  let searchOne: BST | null = nodeOne
+  let searchTwo: BST | null = nodeThree
+
+  while (true) {
+    const foundThreeFromOne = searchOne === nodeThree
+    const foundOneFromThree = searchTwo === nodeOne
+    const foundNodeTwo = searchOne === nodeTwo || searchTwo === nodeTwo
+    const finishedSearching = searchOne === null && searchTwo === null
+
+    if (
+      foundThreeFromOne ||
+      foundOneFromThree ||
+      foundNodeTwo ||
+      finishedSearching
+    ) {
+      break
+    }
+
+    if (searchOne) {
+      searchOne =
+        nodeTwo.value < searchOne.value ? searchOne.left : searchOne.right
+    }
+
+    if (searchTwo) {
+      searchTwo =
+        nodeTwo.value < searchTwo.value ? searchTwo.left : searchTwo.right
+    }
+  }
+
+  const foundNodeFromOther = searchOne === nodeThree || searchTwo === nodeOne
+  const foundNodeTwo = searchOne === nodeTwo || searchTwo === nodeTwo
+
+  if (!foundNodeTwo || foundNodeFromOther) return false
+
+  return searchForTarget(nodeTwo, searchOne === nodeTwo ? nodeThree : nodeOne)
+}
+
+function searchForTarget(node: BST, target: BST): boolean {
+  let currentNode: BST | null = node
+
+  while (currentNode && currentNode !== target) {
+    currentNode =
+      target.value < currentNode.value ? currentNode.left : currentNode.right
+  }
+
+  return currentNode === target
+}
