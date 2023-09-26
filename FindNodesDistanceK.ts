@@ -81,3 +81,85 @@ function addSubtreeNodeAtDistanceK(
     addSubtreeNodeAtDistanceK(node.right, distance + 1, k, output)
   }
 }
+
+// Solution 2, O(n) time complexity, O(n) space complexity
+// where n is the number of nodes in the tree
+type NodeWithParent = { node: BinaryTree | null; parent: BinaryTree | null }
+type NodeValueToParent = Record<number, BinaryTree | null>
+
+export function findNodesDistanceK2(
+  tree: BinaryTree,
+  target: number,
+  k: number
+) {
+  const nodesWithParents = findNodesParents(tree)
+  const targetNode = findTargetNode(tree, target)
+
+  return findNodesAtKFromTarget(targetNode, nodesWithParents, k)
+}
+
+function findNodesAtKFromTarget(
+  targetNode: BinaryTree,
+  nodesWithParents: NodeValueToParent,
+  k: number
+) {
+  const queue: Array<[BinaryTree, number]> = [[targetNode, 0]]
+  const seen = new Set([targetNode.value])
+  const nodesDistanceK: number[] = []
+
+  while (queue.length) {
+    const [currentNode, distanceFromTarget] = queue.shift()!
+
+    if (distanceFromTarget === k) {
+      nodesDistanceK.push(currentNode.value)
+    }
+
+    for (const node of [
+      currentNode.left,
+      currentNode.right,
+      nodesWithParents[currentNode.value],
+    ]) {
+      if (!node || seen.has(node.value)) continue
+
+      queue.push([node, distanceFromTarget + 1])
+    }
+
+    seen.add(currentNode.value)
+  }
+
+  return nodesDistanceK
+}
+
+function findNodesParents(tree: BinaryTree) {
+  const stack: NodeWithParent[] = [{ node: tree, parent: null }]
+  const parents: NodeValueToParent = {}
+
+  while (stack.length) {
+    const { node, parent } = stack.pop()!
+
+    if (!node) continue
+
+    parents[node.value] = parent
+    stack.push({ node: node.left, parent: node })
+    stack.push({ node: node.right, parent: node })
+  }
+
+  return parents
+}
+
+function findTargetNode(tree: BinaryTree, target: number) {
+  const stack = [tree]
+
+  while (stack.length) {
+    const currentNode = stack.pop()!
+
+    if (currentNode.value === target) {
+      return currentNode
+    }
+
+    currentNode.left && stack.push(currentNode.left)
+    currentNode.right && stack.push(currentNode.right)
+  }
+
+  return tree
+}
