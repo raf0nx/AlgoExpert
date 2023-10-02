@@ -20,3 +20,40 @@ export function longestCommonSubsequence(str1: string, str2: string) {
 
   return lcs[str2.length][str1.length].split('')
 }
+
+// Solution 2, O(n * m * min(n, m)) time complexity, O(min(n, m)^2) space complexity
+// where n and m are the lengths of the two input strings
+export function longestCommonSubsequence2(str1: string, str2: string) {
+  const small = str1.length < str2.length ? str1 : str2
+  const big = str1.length >= str2.length ? str1 : str2
+
+  let oddRow = new Array(small.length + 1).fill('')
+  let evenRow = new Array(small.length + 1).fill('')
+
+  for (let i = 1; i < big.length + 1; i++) {
+    let currRow: string[], prevRow: string[]
+
+    if (i % 2) {
+      currRow = oddRow
+      prevRow = evenRow
+    } else {
+      currRow = evenRow
+      prevRow = oddRow
+    }
+
+    for (let j = 1; j < small.length + 1; j++) {
+      if (big[i - 1] === small[j - 1]) {
+        currRow[j] = prevRow[j - 1] + big[i - 1]
+      } else {
+        currRow[j] =
+          prevRow[j].length > currRow[j - 1].length
+            ? prevRow[j]
+            : currRow[j - 1]
+      }
+    }
+  }
+
+  return big.length % 2 === 0
+    ? evenRow[small.length].split('')
+    : oddRow[small.length].split('')
+}
