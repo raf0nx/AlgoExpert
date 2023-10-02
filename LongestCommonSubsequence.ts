@@ -1,5 +1,5 @@
 // Solution 1, O(n * m * min(n, m)) time complexity, O(n * m * min(n, m)) space complexity
-// where n and m are the length of the two input strings
+// where n and m are the lengths of the two input strings
 export function longestCommonSubsequence(str1: string, str2: string) {
   const lcs: string[][] = Array.from({ length: str2.length + 1 }, () =>
     new Array(str1.length + 1).fill('')
