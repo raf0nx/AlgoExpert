@@ -43,3 +43,25 @@ export function minNumberOfJumps2(array: number[]) {
 
   return jumps[jumps.length - 1]
 }
+
+// Solution 3, O(n) time complexity, O(1) space complexity,
+// where n is the length of the input array
+export function minNumberOfJumps3(array: number[]) {
+  let maxReach = array[0]
+  let steps = array[0]
+  let jumps = 0
+
+  for (let i = 1; i < array.length; i++) {
+    if (i === array.length - 1) return jumps + 1
+
+    maxReach = Math.max(maxReach, array[i] + i)
+    steps--
+
+    if (steps === 0) {
+      steps = maxReach - i
+      jumps++
+    }
+  }
+
+  return jumps
+}
