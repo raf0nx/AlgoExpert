@@ -73,3 +73,29 @@ export function waterArea2(heights: number[]) {
 
   return maxes.reduce((a, b) => a + b, 0)
 }
+
+// Solution 3, O(n) time complexity, O(1) space complexity,
+// where n is the length of the input array
+export function waterArea3(heights: number[]) {
+  let left = 1
+  let right = heights.length - 2
+  let currLeftMax = heights[0]
+  let currRightMax = heights[heights.length - 1]
+  let waterAreaSum = 0
+
+  while (left <= right) {
+    if (currLeftMax < currRightMax) {
+      if (heights[left] < currLeftMax)
+        waterAreaSum += currLeftMax - heights[left]
+      else currLeftMax = heights[left]
+      left++
+    } else {
+      if (heights[right] < currRightMax)
+        waterAreaSum += currRightMax - heights[right]
+      else currRightMax = heights[right]
+      right--
+    }
+  }
+
+  return waterAreaSum
+}
