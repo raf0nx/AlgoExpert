@@ -46,3 +46,30 @@ function populateWaterNodes(
     }
   }
 }
+
+// Solution 2, O(n) time complexity, O(n) space complexity,
+// where n is the length of the input array
+export function waterArea2(heights: number[]) {
+  const maxes: number[] = new Array(heights.length).fill(0)
+
+  let leftMax = 0
+  for (let i = 0; i < heights.length; i++) {
+    maxes[i] = leftMax
+    leftMax = Math.max(heights[i], leftMax)
+  }
+
+  let rightMax = 0
+  for (let i = heights.length - 1; i >= 0; i--) {
+    const minHeight = Math.min(maxes[i], rightMax)
+
+    if (heights[i] >= minHeight) {
+      maxes[i] = 0
+    } else {
+      maxes[i] = minHeight - heights[i]
+    }
+
+    rightMax = Math.max(heights[i], rightMax)
+  }
+
+  return maxes.reduce((a, b) => a + b, 0)
+}
