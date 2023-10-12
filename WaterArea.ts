@@ -85,14 +85,12 @@ export function waterArea3(heights: number[]) {
 
   while (left <= right) {
     if (currLeftMax < currRightMax) {
-      if (heights[left] < currLeftMax)
-        waterAreaSum += currLeftMax - heights[left]
-      else currLeftMax = heights[left]
+      currLeftMax = Math.max(heights[left], currLeftMax)
+      waterAreaSum += currLeftMax - heights[left]
       left++
     } else {
-      if (heights[right] < currRightMax)
-        waterAreaSum += currRightMax - heights[right]
-      else currRightMax = heights[right]
+      currRightMax = Math.max(heights[right], currRightMax)
+      waterAreaSum += currRightMax - heights[right]
       right--
     }
   }
