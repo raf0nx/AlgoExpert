@@ -6,14 +6,12 @@ type PrevDiskIndex = number | null
 export function diskStacking(disks: Disk[]) {
   disks.sort(([widthA], [widthB]) => widthA - widthB)
 
-  const heights: number[] = new Array(disks.length).fill(0)
+  const heights = disks.map(disk => disk[2])
   const indexes: PrevDiskIndex[] = new Array(disks.length).fill(null)
   let maxHeightIdx = 0
 
-  for (let i = 0; i < disks.length; i++) {
+  for (let i = 1; i < disks.length; i++) {
     const [width, depth, height] = disks[i]
-
-    heights[i] = height
 
     for (let j = 0; j < i; j++) {
       const [currWidth, currDepth, currHeight] = disks[j]
