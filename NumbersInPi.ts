@@ -1,6 +1,6 @@
 type NumbersTable = Record<string, boolean>
 
-// Solution 1, O(n^2 * m) time complexity, O(n + m) space complexity
+// Solution 1, O(n^3 + m) time complexity, O(n + m) space complexity
 // where n is the length of the `pi` string and m is the length of the `numbers` array
 type ObjWithMinSpaces = { min: number | null }
 
@@ -34,7 +34,13 @@ function getMinSpaces(
     const pfx = pi.substring(start, i + 1)
 
     if (pfx in numbersTable) {
-      getMinSpaces(pi, numbersTable, minNumOfSpaces + 1, i + 1, objWithMinSpaces)
+      getMinSpaces(
+        pi,
+        numbersTable,
+        minNumOfSpaces + 1,
+        i + 1,
+        objWithMinSpaces
+      )
     }
   }
 }
