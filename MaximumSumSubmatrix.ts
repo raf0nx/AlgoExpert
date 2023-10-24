@@ -1,5 +1,5 @@
-// Solution 1, O((h - s + 1)^2 * s^2), O(1) space complexity
-// where h is the height of the matrix and s is the size
+// Solution 1, O(w * h * s^2), O(1) space complexity
+// where w is the width of the matrix, h is the height of the matrix and s is the size
 type Boundaries = {
   startCol: number
   endCol: number
