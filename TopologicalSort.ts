@@ -170,3 +170,89 @@ class JobNode {
     this.visiting = false
   }
 }
+
+// Solution 4, O(j + d) time complexity, O(j + d) space complexity,
+// where j is the number of jobs and d is the number of dependencies
+export function topologicalSort4(jobs: number[], deps: Dependency[]) {
+  const jobGraph = createJobGraph4(jobs, deps)
+  return getOrderedJobs4(jobGraph)
+}
+
+function createJobGraph4(jobs: number[], deps: Dependency[]) {
+  const jobGraph = new JobGraph4(jobs)
+
+  for (const [job, dep] of deps) {
+    jobGraph.addDep(job, dep)
+  }
+
+  return jobGraph
+}
+
+function getOrderedJobs4(jobGraph: JobGraph4) {
+  const orderedJobs: number[] = []
+  const noPrereqs = jobGraph.nodes.filter(node => !node.numOfPrereqs)
+
+  while (noPrereqs.length) {
+    const node = noPrereqs.pop()!
+
+    orderedJobs.push(node.job)
+    removeDeps(node, noPrereqs)
+  }
+
+  return jobGraph.nodes.some(node => node.numOfPrereqs) ? [] : orderedJobs
+}
+
+function removeDeps(node: JobNode4, noPrereqs: JobNode4[]) {
+  while (node.deps.length) {
+    const dep = node.deps.pop()!
+
+    dep.numOfPrereqs -= 1
+
+    if (!dep.numOfPrereqs) noPrereqs.push(dep)
+  }
+}
+
+class JobGraph4 {
+  nodes: JobNode4[]
+  graph: Record<number, JobNode4>
+
+  constructor(jobs: number[]) {
+    this.nodes = []
+    this.graph = {}
+
+    for (const job of jobs) {
+      this.addNode(job)
+    }
+  }
+
+  addNode(job: number) {
+    this.graph[job] = new JobNode4(job)
+    this.nodes.push(this.graph[job])
+  }
+
+  addDep(job: number, dep: number) {
+    const jobNode = this.getNode(job)
+    const depNode = this.getNode(dep)
+
+    jobNode.deps.push(depNode)
+    depNode.numOfPrereqs += 1
+  }
+
+  getNode(job: number) {
+    if (!(job in this.graph)) this.addNode(job)
+
+    return this.graph[job]
+  }
+}
+
+class JobNode4 {
+  job: number
+  deps: JobNode4[]
+  numOfPrereqs: number
+
+  constructor(job: number) {
+    this.job = job
+    this.deps = []
+    this.numOfPrereqs = 0
+  }
+}
