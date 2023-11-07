@@ -1,9 +1,8 @@
-// Solution 1, O(w * n * m * 8^s) time complexity, O(n * m + w * s) space complexity,
+// Solution 1, O(w * n * m * 8^s) time complexity, O(w * s) space complexity,
 // where n is the width of the board, m is the height of the board, w is the number of words and
 // s is the length of the longest word
 export function boggleBoard(board: string[][], words: string[]): string[] {
   const result: string[] = []
-  const visited = new Set<string>()
   let wordFound = false
 
   for (const word of words) {
@@ -11,11 +10,7 @@ export function boggleBoard(board: string[][], words: string[]): string[] {
       for (let j = 0; j < board[0].length; j++) {
         if (board[i][j] !== word[0]) continue
 
-        const isInBoggleBoard = dfs(board, word, 0, [i, j], visited)
-
-        visited.clear()
-
-        if (isInBoggleBoard) {
+        if (dfs(board, word, 0, [i, j])) {
           result.push(word)
           wordFound = true
           break
@@ -36,24 +31,24 @@ function dfs(
   board: string[][],
   word: string,
   currCharPos: number,
-  currPos: [number, number],
-  visited: Set<string>
+  currPos: [number, number]
 ): boolean {
-  if (currCharPos === word.length) return true
-
   const [row, col] = currPos
-  const isVisited = visited.has(`${row},${col}`)
 
-  if (isVisited || word[currCharPos] !== board[row][col]) return false
+  if (word[currCharPos] !== board[row][col]) return false
+
+  if (currCharPos === word.length - 1) return true
+
+  const temp = board[row][col]
+  board[row][col] = '*'
 
   let charFound = false
-  visited.add(`${row},${col}`)
 
   for (const [nextRow, nextCol] of getNextPositions(board, row, col)) {
-    charFound =
-      charFound ||
-      dfs(board, word, currCharPos + 1, [nextRow, nextCol], visited)
+    charFound ||= dfs(board, word, currCharPos + 1, [nextRow, nextCol])
   }
+
+  board[row][col] = temp
 
   return charFound
 }
