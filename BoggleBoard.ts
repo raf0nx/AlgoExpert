@@ -1,30 +1,20 @@
-// Solution 1, O(w * n * m * 8^s) time complexity, O(w * s) space complexity,
+// Solution 1, O(w * n * m * 8^s + w * s) time complexity, O(w * s) space complexity,
 // where n is the width of the board, m is the height of the board, w is the number of words and
 // s is the length of the longest word
 export function boggleBoard(board: string[][], words: string[]): string[] {
-  const result: string[] = []
-  let wordFound = false
+  const result = new Set<string>()
 
   for (const word of words) {
     for (let i = 0; i < board.length; i++) {
       for (let j = 0; j < board[0].length; j++) {
-        if (board[i][j] !== word[0]) continue
+        if (result.has(word) || board[i][j] !== word[0]) continue
 
-        if (dfs(board, word, 0, [i, j])) {
-          result.push(word)
-          wordFound = true
-          break
-        }
-      }
-
-      if (wordFound) {
-        wordFound = false
-        break
+        if (dfs(board, word, 0, [i, j])) result.add(word)
       }
     }
   }
 
-  return result
+  return Array.from(result)
 }
 
 function dfs(
