@@ -18,6 +18,32 @@ export function laptopRentals(times: number[][]) {
   return numOfLaptops
 }
 
+// Solution 2, O(n * log(n)) time complexity, O(n) space complexity,
+// where n is the number of times
+export function laptopRentals2(times: number[][]) {
+  const startTimes = times.map(([start]) => start).sort((a, b) => a - b)
+  const endTimes = times.map(([, end]) => end).sort((a, b) => a - b)
+  let currentLaptopsInUse = 0
+  let startsPointer = 0
+  let endsPointer = 0
+  let numOfLaptopsNeeded = 0
+
+  while (startsPointer < times.length) {
+    if (startTimes[startsPointer] < endTimes[endsPointer]) {
+      startsPointer++
+      currentLaptopsInUse += 1
+      numOfLaptopsNeeded = Math.max(numOfLaptopsNeeded, currentLaptopsInUse)
+    } else {
+      while (startTimes[startsPointer] >= endTimes[endsPointer]) {
+        endsPointer++
+        currentLaptopsInUse -= 1
+      }
+    }
+  }
+
+  return numOfLaptopsNeeded
+}
+
 export class MinHeap {
   heap: number[]
   length: number
