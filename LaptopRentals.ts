@@ -23,22 +23,19 @@ export function laptopRentals(times: number[][]) {
 export function laptopRentals2(times: number[][]) {
   const startTimes = times.map(([start]) => start).sort((a, b) => a - b)
   const endTimes = times.map(([, end]) => end).sort((a, b) => a - b)
-  let currentLaptopsInUse = 0
+
   let startsPointer = 0
   let endsPointer = 0
   let numOfLaptopsNeeded = 0
 
   while (startsPointer < times.length) {
-    if (startTimes[startsPointer] < endTimes[endsPointer]) {
-      startsPointer++
-      currentLaptopsInUse += 1
-      numOfLaptopsNeeded = Math.max(numOfLaptopsNeeded, currentLaptopsInUse)
-    } else {
-      while (startTimes[startsPointer] >= endTimes[endsPointer]) {
-        endsPointer++
-        currentLaptopsInUse -= 1
-      }
+    if (startTimes[startsPointer] >= endTimes[endsPointer]) {
+      endsPointer++
+      numOfLaptopsNeeded--
     }
+
+    startsPointer++
+    numOfLaptopsNeeded++
   }
 
   return numOfLaptopsNeeded
