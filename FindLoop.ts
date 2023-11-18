@@ -1,4 +1,3 @@
-// This is an input class. Do not edit.
 export class LinkedList {
   value: number
   next: LinkedList | null
@@ -43,4 +42,23 @@ export function findLoop(head: LinkedList) {
   }
 
   return currentNode
+}
+
+export function findLoop2(head: LinkedList) {
+  let slowNode = head.next!
+  let fastNode = head.next!.next!
+
+  while (slowNode !== fastNode) {
+    slowNode = slowNode.next!
+    fastNode = fastNode.next!.next!
+  }
+
+  slowNode = head
+
+  while (slowNode !== fastNode) {
+    slowNode = slowNode.next!
+    fastNode = fastNode.next!
+  }
+
+  return slowNode
 }
