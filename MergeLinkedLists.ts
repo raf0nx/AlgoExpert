@@ -18,8 +18,6 @@ export function mergeLinkedLists(headOne: LinkedList, headTwo: LinkedList) {
     headTwo = temp
   }
 
-  const head = headOne
-
   let p1Prev: LinkedList = headOne
   let p1: LinkedList | null = headOne.next
   let p2: LinkedList | null = headTwo
@@ -41,5 +39,5 @@ export function mergeLinkedLists(headOne: LinkedList, headTwo: LinkedList) {
 
   if (p2) p1Prev.next = p2
 
-  return head
+  return headOne
 }
