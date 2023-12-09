@@ -51,3 +51,35 @@ export function getLowestCommonManager(
 
   return visitedManagers[currentR1Node.name] ? currentR1Node : currentR2Node
 }
+
+// Solution 2, O(n) time complexity, O(d) space complexity,
+// where n is the number of people in the org and d is the depth of the org chart
+export function getLowestCommonManager2(
+  topManager: OrgChart,
+  reportOne: OrgChart,
+  reportTwo: OrgChart
+) {
+  return getLowestCommonManagerHelper(topManager, reportOne, reportTwo)[1]
+}
+
+function getLowestCommonManagerHelper(
+  manager: OrgChart,
+  reportOne: OrgChart,
+  reportTwo: OrgChart
+): [number, OrgChart | null] {
+  let numImportantReports = 0
+
+  for (const report of manager.directReports) {
+    const [importantReportsInSubtree, lowestCommonManager] =
+      getLowestCommonManagerHelper(report, reportOne, reportTwo)
+
+    if (lowestCommonManager)
+      return [importantReportsInSubtree, lowestCommonManager]
+
+    numImportantReports += importantReportsInSubtree
+  }
+
+  if (manager === reportOne || manager === reportTwo) numImportantReports += 1
+
+  return [numImportantReports, numImportantReports === 2 ? manager : null]
+}
