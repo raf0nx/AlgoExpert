@@ -44,3 +44,41 @@ function findExternity(
     }
   }
 }
+
+// Solution 2, O(log(n)) time complexity, O(log(n)) space complexity,
+// where n is the length of the input array
+export function searchForRange2(array: number[], target: number): Range {
+  const finalRange: Range = [-1, -1]
+
+  findExternity2(array, target, finalRange, 0, array.length - 1, true)
+  findExternity2(array, target, finalRange, 0, array.length - 1, false)
+
+  return finalRange
+}
+
+function findExternity2(
+  array: number[],
+  target: number,
+  finalRange: Range,
+  left: number,
+  right: number,
+  leftDirection: boolean
+) {
+  if (left > right) return
+
+  const mid = Math.floor((left + right) / 2)
+
+  if (array[mid] === target) {
+    if (leftDirection) {
+      if (array[mid - 1] !== target) finalRange[0] = mid
+      else
+        findExternity2(array, target, finalRange, left, mid - 1, leftDirection)
+    } else {
+      if (array[mid + 1] !== target) finalRange[1] = mid
+      else
+        findExternity2(array, target, finalRange, mid + 1, right, leftDirection)
+    }
+  } else if (array[mid] > target)
+    findExternity2(array, target, finalRange, left, mid - 1, leftDirection)
+  else findExternity2(array, target, finalRange, mid + 1, right, leftDirection)
+}
