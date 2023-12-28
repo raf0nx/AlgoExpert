@@ -5,13 +5,13 @@ type Range = [number, number]
 export function searchForRange(array: number[], target: number): Range {
   const finalRange: Range = [-1, -1]
 
-  findExternity(array, target, finalRange, 0, array.length - 1, true)
-  findExternity(array, target, finalRange, 0, array.length - 1, false)
+  findExtremity(array, target, finalRange, 0, array.length - 1, true)
+  findExtremity(array, target, finalRange, 0, array.length - 1, false)
 
   return finalRange
 }
 
-function findExternity(
+function findExtremity(
   array: number[],
   target: number,
   finalRange: Range,
@@ -50,13 +50,13 @@ function findExternity(
 export function searchForRange2(array: number[], target: number): Range {
   const finalRange: Range = [-1, -1]
 
-  findExternity2(array, target, finalRange, 0, array.length - 1, true)
-  findExternity2(array, target, finalRange, 0, array.length - 1, false)
+  findExtremity2(array, target, finalRange, 0, array.length - 1, true)
+  findExtremity2(array, target, finalRange, 0, array.length - 1, false)
 
   return finalRange
 }
 
-function findExternity2(
+function findExtremity2(
   array: number[],
   target: number,
   finalRange: Range,
@@ -72,13 +72,13 @@ function findExternity2(
     if (leftDirection) {
       if (array[mid - 1] !== target) finalRange[0] = mid
       else
-        findExternity2(array, target, finalRange, left, mid - 1, leftDirection)
+        findExtremity2(array, target, finalRange, left, mid - 1, leftDirection)
     } else {
       if (array[mid + 1] !== target) finalRange[1] = mid
       else
-        findExternity2(array, target, finalRange, mid + 1, right, leftDirection)
+        findExtremity2(array, target, finalRange, mid + 1, right, leftDirection)
     }
   } else if (array[mid] > target)
-    findExternity2(array, target, finalRange, left, mid - 1, leftDirection)
-  else findExternity2(array, target, finalRange, mid + 1, right, leftDirection)
+    findExtremity2(array, target, finalRange, left, mid - 1, leftDirection)
+  else findExtremity2(array, target, finalRange, mid + 1, right, leftDirection)
 }
