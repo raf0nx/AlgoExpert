@@ -1,5 +1,5 @@
 // Solution 1,
-// Best and Average: O(n * log(n)) time complexity, O(log(n)) space complexity
+// Best and Average: O(n * log(n)) time complexity, O(log(n)) space complexity,
 // Worst: O(n^2) time complexity, O(log(n)) space complexity,
 // where n is the length of the input array
 export function quickSort(array: number[], start = 0, end = array.length - 1) {
