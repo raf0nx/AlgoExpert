@@ -13,7 +13,7 @@ export function quickSort(array: number[], start = 0, end = array.length - 1) {
     if (array[left] > pivot && array[right] < pivot) {
       ;[array[left], array[right]] = [array[right], array[left]]
       left++
-      right++
+      right--
     } else if (array[left] <= pivot) left++
     else right--
   }
