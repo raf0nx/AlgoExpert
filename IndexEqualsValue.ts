@@ -17,3 +17,23 @@ export function indexEqualsValue(array: number[]) {
 
   return idx
 }
+
+// Solution 2, O(log(n)) time complexity, O(log(n)) space complexity,
+// where n is the length of the input array
+export function indexEqualsValue2(
+  array: number[],
+  left = 0,
+  right = array.length - 1
+): number {
+  if (left > right) return -1
+
+  const mid = Math.floor((left + right) / 2)
+
+  if (array[mid] === mid) {
+    const possiblySmallerIdx = indexEqualsValue2(array, left, mid - 1)
+
+    if (possiblySmallerIdx !== -1) return possiblySmallerIdx
+    else return mid
+  } else if (array[mid] < mid) return indexEqualsValue2(array, mid + 1, right)
+  else return indexEqualsValue2(array, left, mid - 1)
+}
