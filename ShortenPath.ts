@@ -31,3 +31,29 @@ export function shortenPath(path: string) {
     ? shortenedPath.slice(0, -1)
     : shortenedPath
 }
+
+// Solution 2, O(n) time complexity, O(n) space complexity,
+// where n is the length of the pathname
+export function shortenPath2(path: string) {
+  const tokens = path.split('/').filter(token => token !== '' && token !== '.')
+  const stack: string[] = []
+  const isAbsolutePath = path[0] === '/'
+
+  if (isAbsolutePath) stack.push('')
+
+  for (const token of tokens) {
+    if (token === '..') {
+      if (stack.length === 0 || stack[stack.length - 1] === '..')
+        stack.push(token)
+      else if (stack[stack.length - 1] !== '') stack.pop()
+
+      continue
+    }
+
+    stack.push(token)
+  }
+
+  if (stack.length === 1 && stack[0] === '') return '/'
+
+  return stack.join('/')
+}
