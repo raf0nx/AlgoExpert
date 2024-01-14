@@ -26,3 +26,29 @@ export function largestRectangleUnderSkyline(buildings: number[]) {
 
   return largestRectangle
 }
+
+// Solution 2, O(n) time complexity, O(n) space complexity,
+// where n is the number of buildings
+export function largestRectangleUnderSkyline2(buildings: number[]) {
+  const stack: number[] = []
+  let maxArea = 0
+
+  for (let i = 0; i <= buildings.length; i++) {
+    const currBuildingHeight = buildings[i] || 0
+
+    while (
+      stack.length &&
+      currBuildingHeight <= buildings[stack[stack.length - 1]]
+    ) {
+      const maxPillarHeight = buildings[stack.pop()!]
+      const leftBound = stack[stack.length - 1]
+      const width = !stack.length ? i : i - leftBound - 1
+
+      maxArea = Math.max(maxArea, width * maxPillarHeight)
+    }
+
+    stack.push(i)
+  }
+
+  return maxArea
+}
