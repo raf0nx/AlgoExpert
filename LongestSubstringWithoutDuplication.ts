@@ -43,3 +43,30 @@ function getLongestUniqueSubstring(
 
   getLongestUniqueSubstring(string, i + 1, currentSubstring, stringInfo)
 }
+
+// Solution 2, O(n) time complexity, O(min(n, a)) space complexity,
+// where n is the length of the input string and a is the length of the character alphabet represented in the input string
+export function longestSubstringWithoutDuplication2(string: string) {
+  const seen = new Set<string>()
+  let left = 0
+  let right = 0
+  let longestSubstringLeftIdx = 0
+  let longestSubstringRightIdx = 0
+
+  while (left <= right && right < string.length) {
+    while (left < right && seen.has(string[right])) {
+      seen.delete(string[left])
+      left++
+    }
+
+    if (right - left > longestSubstringRightIdx - longestSubstringLeftIdx) {
+      longestSubstringLeftIdx = left
+      longestSubstringRightIdx = right
+    }
+
+    seen.add(string[right])
+    right++
+  }
+
+  return string.slice(longestSubstringLeftIdx, longestSubstringRightIdx + 1)
+}
