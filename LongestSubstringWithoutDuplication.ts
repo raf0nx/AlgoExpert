@@ -70,3 +70,31 @@ export function longestSubstringWithoutDuplication2(string: string) {
 
   return string.slice(longestSubstringLeftIdx, longestSubstringRightIdx + 1)
 }
+
+// Solution 3, O(n) time complexity, O(min(n, a)) space complexity,
+// where n is the length of the input string and a is the length of the character alphabet represented in the input string
+export function longestSubstringWithoutDuplication3(string: string) {
+  const lastPositions: Record<string, number> = {}
+  let left = 0
+  let right = 0
+  let longestSubstringLeftIdx = 0
+  let longestSubstringRightIdx = 0
+
+  while (right < string.length) {
+    const char = string[right]
+
+    if (char in lastPositions && lastPositions[char] >= left) {
+      left = lastPositions[char] + 1
+    }
+
+    if (right - left > longestSubstringRightIdx - longestSubstringLeftIdx) {
+      longestSubstringLeftIdx = left
+      longestSubstringRightIdx = right
+    }
+
+    lastPositions[char] = right
+    right++
+  }
+
+  return string.slice(longestSubstringLeftIdx, longestSubstringRightIdx + 1)
+}
