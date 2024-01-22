@@ -1,10 +1,11 @@
-// DRAFT
+// Solution 1, O(n * m) time complexity, O(n) space complexity,
+// where n is the length of the main string and m is the length of the substring
 export function underscorifySubstring(string: string, substring: string) {
   const locations: [number, number][] = []
 
   for (let i = 0; i < string.length; i++) {
     if (string.slice(i, i + substring.length) === substring) {
-      locations.push([i, i + substring.length - 1])
+      locations.push([i, i + substring.length])
     }
   }
 
@@ -14,7 +15,7 @@ export function underscorifySubstring(string: string, substring: string) {
     const latestLocation = mergedLocations[mergedLocations.length - 1]
 
     if (!mergedLocations.length) mergedLocations.push(locations[i])
-    else if (locations[i][0] - latestLocation[1] <= 1) {
+    else if (locations[i][0] - latestLocation[1] <= 0) {
       const [latestStart] = mergedLocations.pop()!
       mergedLocations.push([latestStart, locations[i][1]])
     } else mergedLocations.push(locations[i])
@@ -26,16 +27,13 @@ export function underscorifySubstring(string: string, substring: string) {
 
   for (let i = 0; i < string.length; i++) {
     if (locationsForUnderscore.has(i)) {
-      if (betweenUnderscores) {
-        result.push(string[i])
-        result.push('_')
-      } else {
-        result.push('_')
-        result.push(string[i])
-      }
+      result.push('_')
+      result.push(string[i])
       betweenUnderscores = !betweenUnderscores
     } else result.push(string[i])
   }
+
+  if (betweenUnderscores) result.push('_')
 
   return result.join('')
 }
