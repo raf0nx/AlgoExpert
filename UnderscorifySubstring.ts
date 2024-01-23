@@ -15,7 +15,7 @@ export function underscorifySubstring(string: string, substring: string) {
     const latestLocation = mergedLocations[mergedLocations.length - 1]
 
     if (!mergedLocations.length) mergedLocations.push(locations[i])
-    else if (locations[i][0] - latestLocation[1] <= 0) {
+    else if (locations[i][0] <= latestLocation[1]) {
       const [latestStart] = mergedLocations.pop()!
       mergedLocations.push([latestStart, locations[i][1]])
     } else mergedLocations.push(locations[i])
