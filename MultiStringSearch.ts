@@ -37,3 +37,47 @@ function getCharsPositions(string: string) {
 
   return charsPositions
 }
+
+// Solution 2, O(b^2 + ns) time complexity, O(b^2 + n) space complexity,
+// where b is the length of the big string, n is the number of small strings
+// and s is the length of the longest small string
+export function multiStringSearch2(bigString: string, smallStrings: string[]) {
+  const modifiedSuffixTrie = new ModifiedSuffixTrie(bigString)
+
+  return smallStrings.map(string => modifiedSuffixTrie.checkIfContains(string))
+}
+
+interface TrieNode {
+  [key: string]: TrieNode
+}
+
+class ModifiedSuffixTrie {
+  root: TrieNode
+
+  constructor(string: string) {
+    this.root = {}
+    this.buildModifiedSuffixTrie(string)
+  }
+
+  buildModifiedSuffixTrie(string: string) {
+    for (let i = 0; i < string.length; i++) {
+      let currentNode = this.root
+
+      for (let j = i; j < string.length; j++) {
+        if (!currentNode[string[j]]) currentNode[string[j]] = {}
+        currentNode = currentNode[string[j]]
+      }
+    }
+  }
+
+  checkIfContains(string: string) {
+    let currentNode = this.root
+
+    for (const char of string) {
+      if (!(char in currentNode)) return false
+      currentNode = currentNode[char]
+    }
+
+    return true
+  }
+}
