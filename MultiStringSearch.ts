@@ -81,3 +81,57 @@ class ModifiedSuffixTrie {
     return true
   }
 }
+
+// Solution 3, O(ns + bs) time complexity, O(ns) space complexity,
+// where b is the length of the big string, n is the number of small strings
+// and s is the length of the longest small string
+export function multiStringSearch3(bigString: string, smallStrings: string[]) {
+  const { root, endSymbol } = new Trie(smallStrings)
+  const containedStrings: Record<string, boolean> = {}
+
+  for (let i = 0; i < bigString.length; i++) {
+    if (!(bigString[i] in root)) continue
+
+    let currentNode = root
+    let currIdx = i
+
+    while (bigString[currIdx] in currentNode) {
+      currentNode = currentNode[bigString[currIdx]] as TrieNode2
+      currIdx++
+
+      if (endSymbol in currentNode) {
+        containedStrings[currentNode[endSymbol] as string] = true
+      }
+    }
+  }
+
+  return smallStrings.map(string => string in containedStrings)
+}
+
+interface TrieNode2 {
+  [key: string]: TrieNode2 | string
+}
+
+class Trie {
+  root: TrieNode2
+  endSymbol: string
+
+  constructor(strings: string[]) {
+    this.root = {}
+    this.endSymbol = '*'
+    this.buildTrie(strings)
+  }
+
+  buildTrie(strings: string[]) {
+    for (const string of strings) {
+      let currentNode = this.root
+
+      for (const char of string) {
+        if (!(char in currentNode)) currentNode[char] = {}
+        currentNode = currentNode[char] as TrieNode2
+      }
+
+      currentNode[this.endSymbol] = string
+    }
+  }
+}
