@@ -49,3 +49,29 @@ export function diceThrows2(numDice: number, numSides: number, target: number) {
 
   return storedResults[numDice][target]
 }
+
+// Solution 3, O(d * s * t) time complexity, O(t) space complexity,
+// where d is the number of throws, s is the number of sides, and t is the target
+export function diceThrows3(numDice: number, numSides: number, target: number) {
+  let prev = new Array(target + 1).fill(0)
+  let curr = new Array(target + 1).fill(0)
+
+  prev[0] = 1
+
+  for (let currThrow = 1; currThrow <= numDice; currThrow++) {
+    for (let currTarget = 1; currTarget <= target; currTarget++) {
+      for (
+        let currNumSides = 1;
+        currNumSides <= Math.min(currTarget, numSides);
+        currNumSides++
+      ) {
+        curr[currTarget] += prev[currTarget - currNumSides]
+      }
+    }
+
+    prev = curr
+    curr = new Array(target + 1).fill(0)
+  }
+
+  return prev[target]
+}
