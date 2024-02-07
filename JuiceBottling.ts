@@ -34,3 +34,35 @@ function juiceBottlingHelper(
 
   return [quantities, maxPrice]
 }
+
+// Solution 2, O(n^2) time complexity, O(n) space complexity,
+// where n is the length of prices
+export function juiceBottling2(prices: number[]) {
+  const maxProfits = new Array(prices.length).fill(0)
+  const dividingPoints = new Array(prices.length).fill(0)
+
+  for (let size = 1; size < prices.length; size++) {
+    maxProfits[size] = prices[size]
+    dividingPoints[size] = size
+
+    for (let dividingPoint = 1; dividingPoint < size; dividingPoint++) {
+      const possibleProfit =
+        prices[dividingPoint] + maxProfits[size - dividingPoint]
+
+      if (possibleProfit > maxProfits[size]) {
+        maxProfits[size] = possibleProfit
+        dividingPoints[size] = dividingPoint
+      }
+    }
+  }
+
+  const result: number[] = []
+  let currentDividingPoint = dividingPoints.length - 1
+
+  while (currentDividingPoint > 0) {
+    result.push(dividingPoints[currentDividingPoint])
+    currentDividingPoint -= dividingPoints[currentDividingPoint]
+  }
+
+  return result
+}
